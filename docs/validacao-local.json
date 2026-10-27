@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-16",
+  "typescript": "passed",
+  "unitTests": {
+    "passed": 7,
+    "failed": 0
+  },
+  "skillValidation": "passed",
+  "localTranscription": {
+    "language": "pt",
+    "syntheticVoice": "Luciana (macOS)",
+    "words": 24,
+    "seconds": 9.254467
+  },
+  "render": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "seconds": 6,
+    "audio": true,
+    "inputLUFS": "-16.02"
+  },
+  "approvalRejectedWithoutApproval": true,
+  "approvalInvalidatedByBrandChange": true,
+  "originalPreserved": true,
+  "paidAPICalls": 0,
+  "studio": "started successfully; test server stopped",
+  "methodVersion": "0.1.0",
+  "scope": "Registro histórico da instalação inicial; não certifica as alterações 0.2.0."
+}

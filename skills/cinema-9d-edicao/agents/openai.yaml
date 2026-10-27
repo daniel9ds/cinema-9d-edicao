@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cinema 9D Edição"
+  short_description: "Edite sua fala com cortes, legendas e motion local"
+  default_prompt: "Use $cinema-9d-edicao para editar a gravação na pasta que vou informar."

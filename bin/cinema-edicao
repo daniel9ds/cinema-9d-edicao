@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+# Resolve links para funcionar também quando instalado como atalho do usuário.
+TASK_LAUNCHER="$0"
+while [ -L "$TASK_LAUNCHER" ]; do
+  TASK_LINK_DIR=$(CDPATH= cd -- "$(dirname -- "$TASK_LAUNCHER")" && pwd)
+  TASK_LINK=$(readlink "$TASK_LAUNCHER")
+  case "$TASK_LINK" in /*) TASK_LAUNCHER="$TASK_LINK";; *) TASK_LAUNCHER="$TASK_LINK_DIR/$TASK_LINK";; esac
+done
+TASK_METHOD_DIR=$(CDPATH= cd -- "$(dirname -- "$TASK_LAUNCHER")/.." && pwd)
+exec node --import "$TASK_METHOD_DIR/node_modules/tsx/dist/loader.mjs" "$TASK_METHOD_DIR/scripts/cli.ts" "$@"
