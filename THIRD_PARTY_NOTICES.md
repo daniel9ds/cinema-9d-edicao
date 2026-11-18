@@ -7,7 +7,7 @@ O código e a documentação originais do Cinema 9D Edição estão sob a [licen
 A licença MIT do projeto **não substitui** as condições dos componentes abaixo e **não concede direitos** sobre marcas, logotipos ou materiais de clientes:
 
 - Os nomes e símbolos 9D, 9D Studio e Cinema 9D, inclusive `docs/assets/readme/logo-9d.svg` e o símbolo usado nas ilustrações do README, identificam o projeto e não estão licenciados para uso como marca.
-- Perfis de estilo de exemplo, como `styles/bookcasting/`, contêm tokens (cores, tamanhos, regras) e o nome da marca que os originou. O perfil não inclui logo, fonte, mídia ou telas dessa marca, e o nome não é licenciado para uso.
+- O perfil de exemplo `styles/exemplo/` é neutro e não representa nenhuma marca. Perfis criados por cada pessoa ficam na biblioteca local dela, fora do repositório.
 - Gravações, logos, fontes, telas, vozes e imagens usados em cada produção pertencem a seus titulares e continuam sujeitos às permissões de uso deles.
 
 ## Componentes de terceiros

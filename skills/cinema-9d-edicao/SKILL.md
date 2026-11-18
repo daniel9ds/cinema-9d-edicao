@@ -9,7 +9,7 @@ Localize a instalação central pela pasta real desta skill: ela fica em `skills
 O usuário escolhe a pasta de cada produção. Use o executável `bin/cinema-edicao` desse método com o caminho absoluto do trabalho.
 Leia [o método e os formatos](../../docs/metodo.md) antes de criar ou modificar cortes/cenas.
 Para iniciar outra produção/tema ou consolidar aprendizados, leia [novos projetos](../../docs/novos-projetos.md).
-Para reutilizar um perfil consolidado, leia [estilos](../../docs/ESTILOS.md) e o README da versão escolhida no catálogo `styles/`. O perfil BookCasting deriva da referência R10; não carrega os assets ou a aprovação de vídeos futuros.
+Para reutilizar um perfil consolidado, leia [estilos](../../docs/ESTILOS.md) e o README da versão escolhida no catálogo `styles/`. O catálogo traz o perfil neutro `exemplo`; perfis de marca ficam na biblioteca local. Nenhum perfil carrega assets nem a aprovação de vídeos futuros.
 
 
 ## Orquestração e reutilização (0.4.0)
@@ -23,7 +23,7 @@ Planos ficam congelados após iniciar a montagem; para alterar cenas ou quantida
 ## Entrada e análise
 
 Se a produção ainda não existe, execute `iniciar "/pasta"` (opcional `--tema "Tema"` e `--video "/origem/take.mp4"`). Leia `job.json`, as instruções/documento de continuidade atuais, `roteiro/briefing.md`, `marca/identidade.json`, `interface/` e as referências relevantes. Tema e identidade pertencem à produção. Se houver `job.rendering` ou montagem `edicao/remotion-*`, use seus scripts: a configuração da raiz pode ser histórica. Não reinicie por cima de uma composição própria.
-Com perfil, use `--estilo bookcasting --versao 1.0.0` ou o comando `estilo --usar`. O snapshot `marca/estilo.json` é fixado por hash no trabalho. Não altere seu SHA para aceitar uma modificação; aplique uma versão apropriada após preservar a revisão. Logo, fonte, mídia e telas permanecem na produção. Recalcule os tempos para a nova fala; receitas de estilo são guias, não cenas automáticas.
+Com perfil, use `--estilo <id> --versao <x.y.z>` (por exemplo, `--estilo exemplo --versao 1.0.0`) ou o comando `estilo --usar`. O snapshot `marca/estilo.json` é fixado por hash no trabalho. Não altere seu SHA para aceitar uma modificação; aplique uma versão apropriada após preservar a revisão. Logo, fonte, mídia e telas permanecem na produção. Recalcule os tempos para a nova fala; receitas de estilo são guias, não cenas automáticas.
 O vídeo fica em `entrada/`, ou em outro caminho relativo configurado no `job.json`. Preserve o original.
 Execute `preparar "/pasta"`, leia a transcrição palavra a palavra e inspecione `trabalho/frames/`. Extraia mais quadros quando precisar conferir um gesto, corte ou referência. A amostragem de seis quadros não substitui a análise dos momentos relevantes.
 O Whisper small multilíngue roda na máquina; revise nomes, números e palavras omitidas. Se o áudio ou a transcrição não permitirem uma decisão, indique o trecho incerto em vez de inventar uma fala.
@@ -36,7 +36,7 @@ Transforme o rascunho em cenas com função: uma ideia por cena, visual que expl
 O gancho deve ser legível no primeiro quadro. Preserve margens para a interface do canal; ajuste a posição do rosto em `job.json`. O método faz recorte com foco fixo configurável, sem rastreamento automático de rosto.
 Use `framing`, `viewport` e `zoomTo` por cena quando necessário. `presenter: hide` oculta a imagem e mantém a voz. Observe os gestos antes de compor: `gestos` cria `edicao/gestos.json` com tempos originais e `planejar` remapeia os intervalos. Keyframes e máscaras exigem trabalho explícito; não prometa rastreamento ou recorte automático.
 Use `captionMode`/`captionSuppression` para evitar legenda redundante com lettering. Uma palavra de destaque não substitui a informação de toda a frase. Cards, telas e conexões podem usar `elements`/`connections`; consulte os formatos, sem criar campos ignorados pelo renderizador.
-No perfil BookCasting, `lettering` mantém a altura e permite contorno/drift lateral; `branding` controla ocultação, revelação central e fixação superior do logo. `kind: icon` fornece ícones em camadas. O estilo não cria máscaras ou rastreamento. Confira fonte fornecida, área segura e leitura das legendas em frase.
+Nos perfis com lettering e logo controlado por cena, como `exemplo`, `lettering` mantém a altura e permite contorno/drift lateral; `branding` controla ocultação, revelação central e fixação superior do logo. `kind: icon` fornece ícones em camadas. O estilo não cria máscaras ou rastreamento. Confira fonte fornecida, área segura e leitura das legendas em frase.
 Use marca e arquivos reais fornecidos. Métricas e barras exigem valores com fonte. Marque ilustrações/simulações. Não invente prints, números ou resultados.
 Sons são opcionais e devem vir de arquivos autorizados. Música só quando pedida; mantenha voz clara. Um som por movimento é uma referência de estilo, não obrigação para todas as edições.
 

@@ -1,13 +1,13 @@
 {
   "version": "0.4.0",
-  "at": "2026-10-28T05:48:48.341Z",
+  "at": "2026-11-18T02:47:28.181Z",
   "result": "passed",
   "scope": "Mídia e decisões sintéticas; não certifica anúncios reais nem aprova o estilo criativamente.",
   "checks": [
     {
       "name": "TypeScript",
       "status": "passed",
-      "seconds": 1.026,
+      "seconds": 1.01,
       "details": {
         "stdout": "\n> cinema-9d-edicao@0.4.0 check\n> tsc --noEmit\n\n",
         "stderr": ""
@@ -16,7 +16,7 @@
     {
       "name": "Testes automatizados",
       "status": "passed",
-      "seconds": 0.401,
+      "seconds": 0.308,
       "details": {
         "tests": 26
       }
@@ -24,7 +24,7 @@
     {
       "name": "Pré-requisitos locais",
       "status": "passed",
-      "seconds": 0.016,
+      "seconds": 0.019,
       "details": {
         "browser": true,
         "whisperModel": true
@@ -33,16 +33,16 @@
     {
       "name": "Criação de fixtures e proteção do estilo",
       "status": "passed",
-      "seconds": 1.456,
+      "seconds": 1.264,
       "details": {
-        "fontProvided": true,
+        "fontProvided": false,
         "source": "synthetic"
       }
     },
     {
       "name": "Bloqueios sem prévia e aprovação",
       "status": "passed",
-      "seconds": 0.452,
+      "seconds": 0.364,
       "details": {
         "syntheticOnly": true
       }
@@ -50,7 +50,7 @@
     {
       "name": "Render da base anterior e do estilo",
       "status": "passed",
-      "seconds": 31.521,
+      "seconds": 33.556,
       "details": {
         "previewDimensions": "540x960",
         "fps": 30,
@@ -60,19 +60,19 @@
     {
       "name": "Quadros de composição e supressão visual de legendas",
       "status": "passed",
-      "seconds": 6.137,
+      "seconds": 7.085,
       "details": {
         "frames": 6,
         "captionLuminance": {
-          "visible": 157.386,
-          "suppressed": 234.917
+          "visible": 46.1487,
+          "suppressed": 33.0701
         }
       }
     },
     {
       "name": "Prévia adulterada e mudanças invalidam aprovação",
       "status": "passed",
-      "seconds": 0.624,
+      "seconds": 0.505,
       "details": {
         "approvalIsFixture": true,
         "productionApproval": false
@@ -81,7 +81,7 @@
     {
       "name": "Render nativo sintético e preservação das entradas",
       "status": "passed",
-      "seconds": 20.81,
+      "seconds": 22.672,
       "details": {
         "dimensions": "1080x1920",
         "seconds": 16,
@@ -91,7 +91,7 @@
     {
       "name": "Revisão, mapa de gestos e montagem própria",
       "status": "passed",
-      "seconds": 0.812,
+      "seconds": 0.729,
       "details": {
         "gestureTimebase": "original",
         "revision": "r02",
@@ -101,7 +101,7 @@
     {
       "name": "Render a 60 fps com cortes descontínuos",
       "status": "passed",
-      "seconds": 13.858,
+      "seconds": 15.674,
       "details": {
         "fps": 60,
         "seconds": 5,
@@ -112,7 +112,7 @@
     {
       "name": "Studio: sincronização, JSON inválido e travas curtas",
       "status": "passed",
-      "seconds": 3.462,
+      "seconds": 3.522,
       "details": {
         "lastValidPropsPreserved": true,
         "concurrentEditAllowed": true,
@@ -123,7 +123,7 @@
     {
       "name": "Transcrição local de fala sintética em CPU",
       "status": "passed",
-      "seconds": 3.479,
+      "seconds": 3.625,
       "details": {
         "language": "pt",
         "words": 14,
@@ -132,10 +132,10 @@
     }
   ],
   "artifacts": {
-    "legacyPreview": "legado/saida/previas/2026-10-28T05-48-53-574Z-previa.mp4",
-    "stylePreview": "estilo/saida/previas/2026-10-28T05-49-03-660Z-previa.mp4",
+    "legacyPreview": "legado/saida/previas/2026-11-18T02-47-32-651Z-previa.mp4",
+    "stylePreview": "estilo/saida/previas/2026-11-18T02-47-43-324Z-previa.mp4",
     "frames": "quadros",
-    "nativeRender": "estilo/saida/final/2026-10-28T05-49-31-232Z-final.mp4",
-    "cut60Preview": "legado/saida/previas/2026-10-28T05-49-52-967Z-previa.mp4"
+    "nativeRender": "estilo/saida/final/2026-11-18T02-48-13-626Z-final.mp4",
+    "cut60Preview": "legado/saida/previas/2026-11-18T02-48-37-193Z-previa.mp4"
   }
 }

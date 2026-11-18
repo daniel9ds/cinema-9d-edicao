@@ -13,16 +13,16 @@ import {orchestration} from './orchestration.ts';
 
 const HELP=`Cinema 9D Edição — método central, trabalhos em qualquer pasta
 
-cinema-edicao iniciar "/pasta/do/trabalho" [--nome "Nome"] [--tema "Tema"] [--video "/origem/take.mp4"] [--estilo bookcasting]
+cinema-edicao iniciar "/pasta/do/trabalho" [--nome "Nome"] [--tema "Tema"] [--video "/origem/take.mp4"] [--estilo exemplo]
 cinema-edicao estilos [--biblioteca "/biblioteca"]
 cinema-edicao produzir "/trabalho" --versoes 3 [--cpu] [--novo]
 cinema-edicao lote-status|aprovar-lote|finalizar-lote "/trabalho" [--por "Nome"]
-cinema-edicao estilo-criar "/rascunho/novo" --id minha-marca --nome "Nome" --marca "Marca" [--base bookcasting]
+cinema-edicao estilo-criar "/rascunho/novo" --id minha-marca --nome "Nome" --marca "Marca" [--base exemplo]
 cinema-edicao estilo-registrar "/rascunho" --estudo "/estudo" --por "Nome" [--biblioteca "/biblioteca"]
 cinema-edicao kit-registrar "/produção-origem" --manifesto "/lista.json" [--biblioteca "/biblioteca"]
-cinema-edicao kit "/nova-produção" --usar bookcasting [--biblioteca "/biblioteca"]
-cinema-edicao estilo "/pasta/do/trabalho" --usar bookcasting [--versao 1.0.0]
-cinema-edicao demo-estilo "/pasta/nova" [--estilo bookcasting]
+cinema-edicao kit "/nova-produção" --usar minha-marca [--biblioteca "/biblioteca"]
+cinema-edicao estilo "/pasta/do/trabalho" --usar exemplo [--versao 1.0.0]
+cinema-edicao demo-estilo "/pasta/nova" [--estilo exemplo]
 cinema-edicao preparar "/pasta/do/trabalho"   # analisar + transcrever localmente + propor cortes/cenas
 cinema-edicao analisar|transcrever|cortes|planejar "/pasta/do/trabalho"
 cinema-edicao validar|previa|studio|aprovar|final|status "/pasta/do/trabalho"
@@ -290,7 +290,7 @@ async function demo(folder:string){
 async function demoStyle(folder:string,flags:Record<string,string|boolean>){
   const dir=path.resolve(folder);
   if(await exists(dir)&&(await fs.readdir(dir)).length)throw Error('A demonstração precisa de uma pasta nova ou vazia.');
-  await init(dir,{nome:'Estudo sintético de estilo',...(flags.perfil?{perfil:flags.perfil}:{estilo:flags.estilo??'bookcasting',versao:flags.versao??'1.0.0'}),biblioteca:flags.biblioteca??''});
+  await init(dir,{nome:'Estudo sintético de estilo',...(flags.perfil?{perfil:flags.perfil}:{estilo:flags.estilo??'exemplo',versao:flags.versao??'1.0.0'}),biblioteca:flags.biblioteca??''});
   const input=await inside(dir,'entrada/video.mp4');
   await run('ffmpeg',['-hide_banner','-loglevel','error','-n','-f','lavfi','-i','testsrc2=size=720x1280:rate=30:duration=16','-f','lavfi','-i','sine=frequency=220:sample_rate=48000:duration=16','-c:v','libx264','-preset','ultrafast','-pix_fmt','yuv420p','-c:a','aac','-shortest',input],{quiet:true});
   // Assets de exemplo são vetores sintéticos, não capturas do produto nem mídia do cliente.
@@ -298,7 +298,7 @@ async function demoStyle(folder:string,flags:Record<string,string|boolean>){
   await fs.writeFile(await inside(dir,'marca/demo.svg'),'<svg xmlns="http://www.w3.org/2000/svg" width="800" height="176"><rect width="800" height="176" rx="25" fill="#ca2d34"/><text x="40" y="110" font-family="Arial" font-size="65" fill="white">MARCA SINTÉTICA</text></svg>');
   const brandFile=await inside(dir,'marca/identidade.json');await writeJson(brandFile,{...await readJson(brandFile),logo:'marca/demo.svg'});
   const demoBrand=BrandSchema.parse(await readJson(brandFile));
-  for(const rel of ['interface/demo.svg','marca/demo.svg']){const file=await inside(dir,rel);await fs.writeFile(file,(await fs.readFile(file,'utf8')).replaceAll('#ca2d34',demoBrand.primary));}
+  for(const rel of ['interface/demo.svg','marca/demo.svg']){const file=await inside(dir,rel);await fs.writeFile(file,(await fs.readFile(file,'utf8')).replaceAll('#ca2d34',demoBrand.primary).replace('fill="white">MARCA',`fill="${demoBrand.background}">MARCA`));}
   const sha=await hashFile(input),{job}=await load(dir);
   const words='Esta demonstração apresenta frases legíveis em uma composição de teste. Observe os enquadramentos e as conexões. Os elementos seguem posições definidas, sem rastreamento automático. Marca e interface são ilustrações para validar a base.'.split(' ').map((text,i)=>({text,start:i*.4,end:i*.4+.34})).filter(w=>w.end<=16);
   await writeJson(await inside(dir,'trabalho/transcricao-original.json'),{version:1,language:'pt',model:'synthetic-not-transcribed',sourceSha256:sha,timing:'estimated',words});

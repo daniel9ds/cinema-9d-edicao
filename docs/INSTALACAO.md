@@ -39,6 +39,6 @@ A atualização 0.2.0 passou por checagem estática TypeScript e conferência de
 Para uma verificação solicitada do método, estão disponíveis `npm run check`, `npm test` e o comando `demo` seguido de `previa`, usando uma pasta temporária e mídia sintética. Não confunda uma checagem técnica com aprovação criativa.
 
 
-## Consolidação 0.3.0
+## Perfis de estilo
 
-O perfil BookCasting 1.0.0, seus comandos e a validação da base estão descritos em [ESTILOS.md](ESTILOS.md). A fonte é fornecida por cada produção; não é redistribuída no pacote. Consulte `validacao-base-0.3.0.json` para os resultados da rotina desta versão e o relatório visual associado. A evidência histórica acima continua identificada como 0.1.0/0.2.0.
+Perfis, comandos e validação da base estão descritos em [ESTILOS.md](ESTILOS.md). A fonte é fornecida por cada produção; não é redistribuída no pacote. As evidências da versão atual estão em [VALIDACAO-0.4.0.md](VALIDACAO-0.4.0.md).

@@ -22,7 +22,7 @@ export async function createStyle(folder:string,flags:Flags){
   const id=slug.parse(flags.id),name=z.string().min(1).parse(flags.nome),brand=z.string().min(1).parse(flags.marca??name);
   const base=typeof flags.base==='string'?(await listStyles(flags.biblioteca)).find(s=>s.id===flags.base):undefined;
   if(flags.base&&!base)throw Error('Estilo base ausente.');
-  const profile=StyleProfileSchema.parse(await readJson(base?.file??path.join(ROOT,'styles/bookcasting/1.0.0/style.json')));
+  const profile=StyleProfileSchema.parse(await readJson(base?.file??path.join(ROOT,'styles/exemplo/1.0.0/style.json')));
   profile.id=id;profile.version=typeof flags.versao==='string'?flags.versao:'1.0.0';profile.name=name;
   profile.reference={label:'Rascunho: definir referências e evidências no briefing',revision:'draft',approvalScope:'draft-style'};
   profile.brand={...profile.brand,name:brand};

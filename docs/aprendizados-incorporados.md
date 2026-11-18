@@ -6,11 +6,15 @@ Os scripts não entendem a fala nem observam gestos sozinhos. O agente analisa a
 
 Leia `ORQUESTRACAO.md`, `CRIAR-ESTILO.md` e `VALIDACAO-0.4.0.md`. Nenhuma produção antiga é migrada. A biblioteca de marca é privada e fica fora do método. Não há publicação automática.
 
+## Publicação do repositório (0.4.0)
+
+O catálogo central passa a trazer o perfil neutro `exemplo` 1.0.0, com a identidade padrão do método. Ele é o padrão de `demo-estilo` e a base de `estilo-criar`. Perfis e estudos de marcas específicas saem do repositório e ficam na biblioteca local de quem os criou. Produções existentes não mudam, porque cada uma guarda o snapshot do seu estilo; como o código mudou, produções da base sem aprovação precisam de nova prévia antes de aprovar.
+
 ## Histórico 0.3.0
 
 # Melhorias incorporadas — 0.3.0
 
-Consolidação local do perfil BookCasting 1.0.0 e validação da base em 28/10/2026. Veja `ESTILOS.md`, o README do perfil e `validacao-base-0.3.0.json` para a evidência técnica desta etapa.
+Catálogo de perfis de estilo e validação da base em 28/10/2026. O primeiro perfil foi consolidado a partir de uma produção real; ele não faz parte do repositório público e foi substituído no catálogo pelo perfil neutro `exemplo` (veja `ESTILOS.md`).
 
 - Catálogo de perfis com schema e versões; aplicação explícita e snapshot fixado por SHA-256 em cada produção.
 - Primeiro perfil: paleta, tipografia, movimento, cards/ícones, conexões, lettering com altura fixa, revelação central de marca e legendas em frases.
@@ -20,7 +24,7 @@ Consolidação local do perfil BookCasting 1.0.0 e validação da base em 28/10/
 - Rotina de validação local com fixtures, testes, renders, transcrição e Studio temporário, incluindo falhas deliberadas. Aprovações da rotina são sintéticas.
 - Estado de Studio encerrado explícito e opção `--no-open` para validação sem abrir abas.
 
-Naquele estágio, orquestração, criação assistida de novos estilos e variantes em lote estavam pendentes; foram acrescentados em 0.4.0. Aprovação do anúncio R10, validação técnica do perfil e aprovação estética de novas prévias são estados distintos.
+Naquele estágio, orquestração, criação assistida de novos estilos e variantes em lote estavam pendentes; foram acrescentados em 0.4.0. Aprovação da produção de referência, validação técnica do perfil e aprovação estética de novas prévias são estados distintos.
 
 ## Histórico 0.2.0
 

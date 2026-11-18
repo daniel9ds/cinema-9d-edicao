@@ -2,7 +2,7 @@
 
 Cada produção tem seu tema, gravação, marca, telas e referências. Os comandos abaixo usam a instalação convencional em `~/projetos/cinema-9d-edicao`; se você clonou em outro lugar, substitua esse prefixo. A instalação central guarda código e procedimentos reutilizáveis; não guarda mídia de clientes. Você pode escolher qualquer pasta local e abrir o agente diretamente nela.
 
-Na base 0.3.0, produções BookCasting podem acrescentar `--estilo bookcasting --versao 1.0.0` ao comando `iniciar`. Veja [perfis de estilo](ESTILOS.md). Isso fixa a linguagem visual; o vídeo, as telas, os gestos e os tempos são novos em cada produção.
+Para fixar uma linguagem visual, acrescente `--estilo <id> --versao <x.y.z>` ao comando `iniciar` (por exemplo, `--estilo exemplo --versao 1.0.0`). Veja [perfis de estilo](ESTILOS.md). Isso fixa a linguagem visual; o vídeo, as telas, os gestos e os tempos são novos em cada produção.
 
 ## 1. Criar a pasta
 
@@ -67,7 +67,7 @@ Abra a mesma pasta da produção, leia as instruções e continue da revisão at
 
 Esse comando guarda as decisões/transcrição anteriores em uma pasta datada, ativa `job.revision=r02` e volta as cenas a rascunho. **Não é um backup completo de mídia/código**: preserve os assets existentes e crie novos nomes ao alterá-los; faça uma cópia completa se precisar de recuperação independente. MP4s antigos permanecem em `saida/`.
 
-Montagens próprias, como `edicao/remotion-r10`, têm seus próprios scripts e documentos. Configure opcionalmente `job.rendering` com `type: custom`, `project` relativo e `composition`. Os comandos centrais também detectam pastas `edicao/remotion-*` e recusam operar sobre a montagem histórica da raiz. `status` e `aprender` continuam disponíveis. Leia o documento atual; não escolha uma revisão apenas pelo maior número do diretório.
+Montagens próprias, como `edicao/remotion-minha-montagem`, têm seus próprios scripts e documentos. Configure opcionalmente `job.rendering` com `type: custom`, `project` relativo e `composition`. Os comandos centrais também detectam pastas `edicao/remotion-*` e recusam operar sobre a montagem histórica da raiz. `status` e `aprender` continuam disponíveis. Leia o documento atual; não escolha uma revisão apenas pelo maior número do diretório.
 
 ## 5. Trazer aprendizados da utilização
 

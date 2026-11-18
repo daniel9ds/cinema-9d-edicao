@@ -1,7 +1,7 @@
 {
   "version": "0.4.0",
-  "at": "2026-10-28T05:51:26.296Z",
-  "root": "/private/tmp/cinema04-validation-6qZPvP",
+  "at": "2026-11-18T02:47:01.823Z",
+  "root": "/private/tmp/cinema04-validation-QG0Slo",
   "results": [
     {
       "check": "preparação local cria contrato, sem simular direção criativa",
@@ -51,43 +51,43 @@
   "syntheticOnly": true,
   "providerCalls": 0,
   "clientMediaModified": false,
-  "firstBatch": "/private/tmp/cinema04-validation-6qZPvP/producao/orquestracao/lotes/2e247558-9954-4a35-8538-8e5889eff0bf",
+  "firstBatch": "/private/tmp/cinema04-validation-QG0Slo/producao/orquestracao/lotes/32660bc4-81f3-4339-94c2-91c0b04cea98",
   "firstBatchState": {
     "version": 1,
-    "batch": "2e247558-9954-4a35-8538-8e5889eff0bf",
+    "batch": "32660bc4-81f3-4339-94c2-91c0b04cea98",
     "requestedVariants": 2,
-    "inputFingerprint": "29b74523d79f3e4eb8e1e398cfa8022e279b39a5dff0b8d2af50b35304ef1fa7",
+    "inputFingerprint": "b09423afb6937e4154986fed09046440b0018c59925ea88eec1b07081b68e0a4",
     "phase": "finalizado",
-    "planSha256": "a82209e76c63fdc64824eaa0d6c9fd57f372b42b0fd33ba0dab13ed6be346e01",
+    "planSha256": "639a85c1e12d4633d34ffd8e9b32e6591f5e8ea21c6a5238400ff64e5107b907",
     "variants": [
       {
         "id": "v001",
         "label": "Composição A",
         "strategy": "Texto com apresentador na base, voz original.",
-        "folder": "versoes/2e247558-9954-4a35-8538-8e5889eff0bf/v001",
-        "fingerprint": "55d3d951006c57e9504118e881bc10488e7e72395a8c1b7c66803f23f218a88b",
-        "preview": "versoes/2e247558-9954-4a35-8538-8e5889eff0bf/v001/saida/previas/2026-10-28T05-51-01-221Z-previa.mp4",
-        "previewSha256": "d4c5d8c6933703cfceafae186fc4b38b9a87e396bfc851fc607cac594a00a397",
-        "final": "versoes/2e247558-9954-4a35-8538-8e5889eff0bf/v001/saida/final/2026-10-28T05-51-11-852Z-final.mp4",
-        "finalSha256": "39e3d64421de6bace75e51dc2fb57198182c22a9e63b1413b565dbf7d9dce028"
+        "folder": "versoes/32660bc4-81f3-4339-94c2-91c0b04cea98/v001",
+        "fingerprint": "32f6f2bb50edb2f26507bd884fe1ae72426e16559081f5f1b55fa2e7b726a748",
+        "preview": "versoes/32660bc4-81f3-4339-94c2-91c0b04cea98/v001/saida/previas/2026-11-18T02-46-33-628Z-previa.mp4",
+        "previewSha256": "060f79d7dcd09ca0d07a2a2d06dc7225fbb81fc427d370d30af05bc848c20a3e",
+        "final": "versoes/32660bc4-81f3-4339-94c2-91c0b04cea98/v001/saida/final/2026-11-18T02-46-45-163Z-final.mp4",
+        "finalSha256": "f2993df0741541f2816d1dd33eb6d7ee27550fd6bfba4476d93f1f90e076649f"
       },
       {
         "id": "v002",
         "label": "Composição B",
         "strategy": "Enquadramento fechado e lettering; mesma voz original.",
-        "folder": "versoes/2e247558-9954-4a35-8538-8e5889eff0bf/v002",
-        "fingerprint": "a8f17be8c6c0c343c17c88e1a2610399430519933aba2060d2e0dd087b05d216",
-        "preview": "versoes/2e247558-9954-4a35-8538-8e5889eff0bf/v002/saida/previas/2026-10-28T05-51-06-269Z-previa.mp4",
-        "previewSha256": "c56c56a54042bba3eeb79aa2daea374f173ce5f453b68570be1c99e415690d34",
-        "final": "versoes/2e247558-9954-4a35-8538-8e5889eff0bf/v002/saida/final/2026-10-28T05-51-16-678Z-final.mp4",
-        "finalSha256": "5ad372ad63093974113b2e74306f93b5d98bc29fd8d3f6387e8e64ebec3541b3"
+        "folder": "versoes/32660bc4-81f3-4339-94c2-91c0b04cea98/v002",
+        "fingerprint": "db7a6912ff6a3bc22211995910b81de1a6baa87c7bb3aa003f0a79aabad8d16c",
+        "preview": "versoes/32660bc4-81f3-4339-94c2-91c0b04cea98/v002/saida/previas/2026-11-18T02-46-39-205Z-previa.mp4",
+        "previewSha256": "d12a651c1a8c8fd6e2e65373294978870be8ef753d9b0d039a616d46572cda81",
+        "final": "versoes/32660bc4-81f3-4339-94c2-91c0b04cea98/v002/saida/final/2026-11-18T02-46-50-947Z-final.mp4",
+        "finalSha256": "cc83e63a6a42d22d5776405e35f891733aecf99d75149d26b3f3361ed5380c14"
       }
     ],
-    "createdAt": "2026-10-28T05:51:00.233Z",
+    "createdAt": "2026-11-18T02:46:32.355Z",
     "approval": {
       "by": "CHECK AUTOMATIZADO — APENAS MÍDIA SINTÉTICA",
-      "reviewSha256": "a73e1c8d6d5be9aaed6d28e4b1c338583a6a6cf3427d89a741f301b3076e3dc9",
-      "at": "2026-10-28T05:51:11.103Z"
+      "reviewSha256": "b2e445f058ed4faea73c6a841f09311ff0416b286fb508c60c59624f52e74680",
+      "at": "2026-11-18T02:46:44.360Z"
     }
   }
 }

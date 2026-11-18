@@ -123,7 +123,7 @@ Você pode clonar em outro caminho; ajuste o prefixo dos comandos. Para atualiza
    ~/projetos/cinema-9d-edicao/bin/cinema-edicao iniciar "/caminho/minha-producao" --nome "Minha edição" --video "/caminho/gravacao.mov"
    ```
 
-   Sem `--video`, coloque o arquivo em `entrada/video.mp4` depois. Use `--tema "Tema"`, `--estilo bookcasting` (perfil de exemplo) ou `--kit <id>` (kit da sua biblioteca) quando fizer sentido.
+   Sem `--video`, coloque o arquivo em `entrada/video.mp4` depois. Use `--tema "Tema"`, `--estilo exemplo` (perfil de exemplo) ou `--kit <id>` (kit da sua biblioteca) quando fizer sentido.
 
 2. Coloque logo e fonte em `marca/`, telas em `interface/`, imagens e sons autorizados em `elementos/`, e preencha `roteiro/briefing.md` ([modelo](docs/briefing-modelo.md)).
 
@@ -175,7 +175,7 @@ Para aprovar, `edicao/cenas.json` precisa estar com `status: "reviewed"`. Os tem
 ## 06 / Várias versões, estilos e kits
 
 - **Várias versões:** `produzir "/producao" --versoes 3 --cpu` cria um lote com pastas isoladas por versão. O agente escreve o plano com diferenças editoriais reais, o orquestrador monta e renderiza, e o agente registra a revisão criativa. Depois a galeria local fica em `saida/lotes/<lote>/index.html`. Só com o seu OK: `aprovar-lote --por "Nome"` e `finalizar-lote`. Veja [orquestração](docs/ORQUESTRACAO.md).
-- **Estilos:** perfis versionados de cores, tipografia, legendas e composição. Cada produção recebe uma cópia fixada por hash. O catálogo traz o perfil de exemplo `bookcasting` 1.0.0. Veja [estilos](docs/ESTILOS.md).
+- **Estilos:** perfis versionados de cores, tipografia, legendas e composição. Cada produção recebe uma cópia fixada por hash. O catálogo traz o perfil neutro `exemplo` 1.0.0; perfis da sua marca ficam na biblioteca local. Veja [estilos](docs/ESTILOS.md).
 - **Estilo e kit próprios:** `estilo-criar` → `demo-estilo` → `previa` → `estilo-registrar`. O `kit-registrar` copia para a biblioteca apenas uma lista explícita de materiais, com SHA-256. Veja [criar estilo e kit](docs/CRIAR-ESTILO.md).
 - **Aprendizados:** `aprender` registra observações locais numa produção. Elas não alteram o método nem treinam modelos. Veja [novos projetos](docs/novos-projetos.md).
 

@@ -21,7 +21,7 @@ Ao atualizar este método, mantenha compatibilidade dos campos antigos e registr
 
 ## Perfis de estilo (0.3.0)
 
-Leia `docs/ESTILOS.md` ao aplicar perfis. O perfil BookCasting 1.0.0 consolida a linguagem da R10, sem copiar seus assets ou tempos. A aprovação da referência não aprova o pacote visual novo nem outras produções. Snapshots por produção são fixados por hash; alterações pedem aplicação explícita e nova prévia. Orquestração local e variantes estão documentadas em docs/ORQUESTRACAO.md (0.4.0); o agente ativo faz direção e revisão, os scripts fazem montagem e validação.
+Leia `docs/ESTILOS.md` ao aplicar perfis. O catálogo traz o perfil neutro `exemplo` 1.0.0; perfis de marca ficam na biblioteca local, fora do repositório. Um perfil não aprova produções. Snapshots por produção são fixados por hash; alterações pedem aplicação explícita e nova prévia. Orquestração local e variantes estão documentadas em docs/ORQUESTRACAO.md (0.4.0); o agente ativo faz direção e revisão, os scripts fazem montagem e validação.
 
 `npm run validar:base` verifica fixtures locais com renders e Studio temporário. Aprovações nessa rotina são marcadas como testes sintéticos, nunca aprovação do usuário. Preserve evidência técnica separada da revisão estética.
 

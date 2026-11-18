@@ -52,7 +52,7 @@ async function main(){
       const hiddenComposition=await selectComposition({serveUrl,id:'Cinema9DEdicao',inputProps:hidden});
       const hiddenFile=path.join(dir,'sem-legenda.png');await renderStill({composition:hiddenComposition,serveUrl,inputProps:hidden,frame:30,scale:.5,output:hiddenFile});
       async function luminance(file:string){const r=await run('ffmpeg',['-hide_banner','-i',file,'-vf','crop=425:80:40:675,signalstats,metadata=print','-f','null','-'],{quiet:true});const value=Number(r.stderr.match(/lavfi.signalstats.YAVG=([\d.]+)/)?.[1]);assert.ok(Number.isFinite(value));return value;}
-      const visible=await luminance(path.join(dir,'frame-30.png')),suppressed=await luminance(hiddenFile);assert.ok(suppressed-visible>5,'Supressão não alterou a faixa de legenda como esperado.');
+      const visible=await luminance(path.join(dir,'frame-30.png')),suppressed=await luminance(hiddenFile);assert.ok(Math.abs(suppressed-visible)>5,'Supressão não alterou a faixa de legenda como esperado.');
       report.artifacts.frames='quadros';return{frames:6,captionLuminance:{visible,suppressed}};
     });
     await step('Prévia adulterada e mudanças invalidam aprovação',async()=>{

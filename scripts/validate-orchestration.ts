@@ -25,7 +25,7 @@ async function fixture(dir:string,flags:Record<string,string|boolean>){
 }
 async function active(){const p=await readJson(path.join(jobDir,'orquestracao/ativo.json'));const folder=path.join(jobDir,'orquestracao/lotes',p.batch);return {folder,state:await readJson(path.join(folder,'estado.json'))};}
 try{
-  await fixture(jobDir,{estilo:'bookcasting'});const source=path.join(jobDir,'entrada/video.mp4'),original=await hashFile(source);
+  await fixture(jobDir,{estilo:'exemplo'});const source=path.join(jobDir,'entrada/video.mp4'),original=await hashFile(source);
   await orchestration('produzir',jobDir,{versoes:'2',cpu:true});let {folder,state}=await active();assert.equal(state.phase,'aguardando-direcao');assert.equal(state.variants.length,0);pass('preparação local cria contrato, sem simular direção criativa');
   const cuts=await readJson(path.join(jobDir,'edicao/cortes.json')),scenes=await readJson(path.join(jobDir,'edicao/cenas.json'));
   const plan={version:1,inputFingerprint:state.inputFingerprint,requestedVariants:2,variants:[{id:'v001',label:'Composição A',strategy:'Texto com apresentador na base, voz original.',cuts,scenes},{id:'v002',label:'Composição B',strategy:'Enquadramento fechado e lettering; mesma voz original.',cuts,scenes:{...scenes,scenes:[{id:'b',start:0,end:3,title:'OUTRA COMPOSIÇÃO',lettering:{text:'VERSÃO B',top:280,size:100},viewport:{x:150,y:600,width:650,height:650},zoomTo:1.13,branding:'show'}]}}]};

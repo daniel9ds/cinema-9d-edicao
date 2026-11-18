@@ -9,17 +9,17 @@ Grave sua fala. Cada nova gravação deve ter sua própria pasta de produção. 
 ```sh
 # COMANDO — ajuste os caminhos da instalação, do trabalho e da gravação
 ~/projetos/cinema-9d-edicao/bin/cinema-edicao iniciar "/caminho/novo-video" \
-  --video "/caminho/gravei.mp4" --kit bookcasting --nome "BookCasting — novo tema"
+  --video "/caminho/gravei.mp4" --kit minha-marca --nome "Minha marca — novo tema"
 ~/projetos/cinema-9d-edicao/bin/cinema-edicao produzir "/caminho/novo-video" --versoes 3 --cpu
 ```
 
 `--kit` usa a biblioteca local, por padrão `~/projetos/cinema-9d-biblioteca`. Use `--biblioteca "/outro/local"` em `iniciar`, `estilos`, `estilo`, `kit`, `kit-registrar` e `estilo-registrar` para mudar o local. A biblioteca pode ficar em qualquer pasta, fora do código do método. Ela não acompanha automaticamente um clone do GitHub.
 
-Se só o catálogo do método estiver instalado, use `--estilo bookcasting`; forneça logo, fonte e telas em `marca/` e `interface/`, ou registre seu próprio kit. O catálogo de estilo contém regras e tokens; o kit contém os materiais selecionados da marca. Nunca coloque toda a produção antiga na biblioteca.
+Se só o catálogo do método estiver instalado, use `--estilo exemplo`; forneça logo, fonte e telas em `marca/` e `interface/`, ou registre seu próprio kit. O catálogo de estilo contém regras e tokens; o kit contém os materiais selecionados da marca. Nunca coloque toda a produção antiga na biblioteca.
 
 No agente, envie:
 
-> Use a skill cinema-9d-edicao. A nova produção está em /caminho/novo-video. Edite a fala usando o kit BookCasting e crie 3 versões com diferenças editoriais relevantes, preservando a mensagem e os gestos. Leia o briefing e o perfil; execute produzir, preencha o plano do lote, gere e revise as prévias. Mostre a galeria para minha aprovação. Não use serviços pagos nem publique sem meu pedido.
+> Use a skill cinema-9d-edicao. A nova produção está em /caminho/novo-video. Edite a fala usando o kit minha-marca e crie 3 versões com diferenças editoriais relevantes, preservando a mensagem e os gestos. Leia o briefing e o perfil; execute produzir, preencha o plano do lote, gere e revise as prévias. Mostre a galeria para minha aprovação. Não use serviços pagos nem publique sem meu pedido.
 
 O agente deve ouvir/ler a nova fala e observar a pessoa; o perfil anterior não contém os gestos, máscaras ou timestamps do novo take. Para falar do mesmo produto, bastam nova gravação e objetivo. Materiais novos serão necessários se a fala exigir telas que ainda não existem, campanhas específicas, novos ambientes ou tomadas. Cenas com IA, troca de roupa, recorte de corpo, rastreamento e 3D customizado são trabalhos adicionais explícitos; não são criados pelo comando de lote e não devem bloquear uma primeira montagem local possível.
 

@@ -12,7 +12,7 @@ Escolha marca, público, objetivo e referências. Descreva o que aproveitar de c
   --id minha-marca --nome "Minha marca — editorial" --marca "Minha marca" --primaria "#496cf5"
 ```
 
-O rascunho começa sem aprovação e com tokens neutros. Para derivar deliberadamente de um perfil existente, acrescente `--base bookcasting`. Não herda a aprovação do BookCasting. Edite `briefing.md` e `style.json` com o agente. A especificação aceita os tokens presentes em `StyleProfileSchema` (`src/styles.ts`). Novos efeitos fora desse vocabulário pedem implementação explícita e validação do método/composição.
+O rascunho começa sem aprovação e com tokens neutros. Para derivar deliberadamente de um perfil existente, acrescente `--base exemplo` (ou o id de outro perfil). O rascunho não herda a aprovação do perfil base. Edite `briefing.md` e `style.json` com o agente. A especificação aceita os tokens presentes em `StyleProfileSchema` (`src/styles.ts`). Novos efeitos fora desse vocabulário pedem implementação explícita e validação do método/composição.
 
 Defina cores/fontes; grid ou arcos; pesos e tamanhos; margens; tempo/easing das entradas; limite de perspectiva; cards; frase inteira ou legenda progressiva; posição do logo e regras de rosto. Descreva receitas sem timestamps fixos: “conexão entre três grupos na frase que os apresenta”, por exemplo. Não transporte tracking, máscaras, roupa ou áudio de outro vídeo como se fossem reutilizáveis.
 

@@ -9,7 +9,7 @@ import {ROOT,readJson,writeJson,hashFile} from '../scripts/core.ts';
 import {applyStyle,loadStyle,listStyles} from '../scripts/styles.ts';
 import {revision,assertCentral,learn} from '../scripts/projects.ts';
 
-const profile=StyleProfileSchema.parse(await readJson(path.join(ROOT,'styles/bookcasting/1.0.0/style.json')));
+const profile=StyleProfileSchema.parse(await readJson(path.join(ROOT,'styles/exemplo/1.0.0/style.json')));
 const scene=()=>SceneSchema.parse({id:'x',start:0,end:5,type:'headline',title:'Ideia'});
 async function fixture(){
   const dir=await fs.mkdtemp(path.join(os.tmpdir(),'cinema-style-'));
@@ -19,7 +19,7 @@ async function fixture(){
   return dir;
 }
 test('catálogo valida identidade/versão e mantém perfil sem mídia privada',async()=>{
-  const styles=await listStyles();assert.ok(styles.some(s=>s.id==='bookcasting'&&s.version==='1.0.0'));
+  const styles=await listStyles();assert.ok(styles.some(s=>s.id==='exemplo'&&s.version==='1.0.0'));
   assert.equal(profile.reference.approvalScope,'reference-production-only');
   assert.equal('logo' in profile.brand,false);assert.equal('fontFile' in profile.brand,false);
 });
@@ -63,25 +63,25 @@ test('viewport e supressão do apresentador preservam configuração de áudio',
 });
 test('estilo é copiado e fixado por hash na produção; alteração é detectada',async()=>{
   const dir=await fixture();try{
-    await applyStyle(dir,'bookcasting','1.0.0');const job=JobSchema.parse(await readJson(path.join(dir,'job.json')));
+    await applyStyle(dir,'exemplo','1.0.0');const job=JobSchema.parse(await readJson(path.join(dir,'job.json')));
     assert.equal(job.style?.sha256,await hashFile(path.join(dir,'marca/estilo.json')));
-    assert.equal((await loadStyle(dir,job))?.id,'bookcasting');
+    assert.equal((await loadStyle(dir,job))?.id,'exemplo');
     const changed=await readJson(path.join(dir,'marca/estilo.json'));changed.tokens.motion.entrySeconds=.8;
     await writeJson(path.join(dir,'marca/estilo.json'),changed,false);await assert.rejects(loadStyle(dir,job));
   }finally{await fs.rm(dir,{recursive:true,force:true});}
 });
-test('não aplica identidade BookCasting sobre outra marca nem reabre prévia na mesma revisão',async()=>{
+test('não aplica o estilo sobre outra marca nem reabre prévia na mesma revisão',async()=>{
   const dir=await fixture();try{
     await writeJson(path.join(dir,'marca/identidade.json'),BrandSchema.parse({name:'Outra marca'}),false);
-    await assert.rejects(applyStyle(dir,'bookcasting'));assert.equal((await readJson(path.join(dir,'marca/identidade.json'))).name,'Outra marca');
+    await assert.rejects(applyStyle(dir,'exemplo'));assert.equal((await readJson(path.join(dir,'marca/identidade.json'))).name,'Outra marca');
     await writeJson(path.join(dir,'marca/identidade.json'),BrandSchema.parse({name:'Sua marca'}),false);
     await writeJson(path.join(dir,'trabalho/ultima-previa.json'),{revision:'r01'},false);
-    await assert.rejects(applyStyle(dir,'bookcasting'));
+    await assert.rejects(applyStyle(dir,'exemplo'));
   }finally{await fs.rm(dir,{recursive:true,force:true});}
 });
 test('revisão preserva o snapshot do estilo e não move a mídia',async()=>{
   const dir=await fixture();try{
-    await applyStyle(dir,'bookcasting');await fs.writeFile(path.join(dir,'entrada/video.mp4'),'original-ficticio');
+    await applyStyle(dir,'exemplo');await fs.writeFile(path.join(dir,'entrada/video.mp4'),'original-ficticio');
     const source=await hashFile(path.join(dir,'entrada/video.mp4'));
     await revision(dir,JobSchema.parse(await readJson(path.join(dir,'job.json'))),'r02','Teste');
     const saved=(await fs.readdir(path.join(dir,'revisoes'),{withFileTypes:true})).find(e=>e.isDirectory())!;
@@ -91,8 +91,8 @@ test('revisão preserva o snapshot do estilo e não move a mídia',async()=>{
 });
 test('montagem própria impede a base histórica e aprendizado não modifica o perfil',async()=>{
   const dir=await fixture();try{
-    await fs.mkdir(path.join(dir,'edicao/remotion-r10'));await assert.rejects(assertCentral(dir,JobSchema.parse(await readJson(path.join(dir,'job.json')))));
-    const source=path.join(ROOT,'styles/bookcasting/1.0.0/style.json'),before=await hashFile(source);
+    await fs.mkdir(path.join(dir,'edicao/remotion-propria'));await assert.rejects(assertCentral(dir,JobSchema.parse(await readJson(path.join(dir,'job.json')))));
+    const source=path.join(ROOT,'styles/exemplo/1.0.0/style.json'),before=await hashFile(source);
     await learn(dir,{titulo:'Observação',observacao:'Leitura no celular',proposta:'Rever tamanho',evidencia:'Prévia, 2s'});
     const files=await fs.readdir(path.join(dir,'aprendizados'));assert.equal(files.length,1);assert.equal((await readJson(path.join(dir,'aprendizados',files[0]))).status,'proposto');assert.equal(await hashFile(source),before);
   }finally{await fs.rm(dir,{recursive:true,force:true});}
