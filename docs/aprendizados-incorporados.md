@@ -12,6 +12,12 @@ Guia `GERACAO-GOOGLE.md` para os servidores MCP `genmedia-*` (Veo, Omni, Nano Ba
 
 Limites: o renderizador central não tem cena de B-roll em vídeo. Vídeo gerado entra como still, por montagem própria ou por uma futura extensão do `SceneSchema`. Narração em primeiro plano também exige montagem própria. O custo registrado é estimativa do agente, não o faturamento.
 
+## Painel anamórfico com Blender (guia experimental)
+
+Guia `ANAMORFICO-BLENDER.md`, generalizado de um único projeto real de painel LED 3D curvo: briefing mínimo, etapas (geometria do painel, câmera no ponto ótimo, render, desembrulhar, vídeos e simulado no prédio), modelos 3D gerados por IA, render longo, acompanhamento pelo MCP do Blender, aprovação com o cliente e serviços pagos. A skill aponta para o guia quando o pedido fala em anamórfico ou LED 3D.
+
+Limites: fica fora do pipeline de edição de fala. Nenhum comando, esquema ou teste do método implementa o fluxo, e as observações técnicas do Blender não foram validadas aqui. A aprovação é registrada por escrito, sem o hash de `aprovar`. Os scripts do projeto original não entram no repositório; generalizá-los exige implementação, fixtures sintéticas e autorização. A skill e os docs ficam fora do fingerprint de render, então produções existentes não mudam.
+
 ## Publicação do repositório (0.4.0)
 
 O catálogo central passa a trazer o perfil neutro `exemplo` 1.0.0, com a identidade padrão do método. Ele é o padrão de `demo-estilo` e a base de `estilo-criar`. Perfis e estudos de marcas específicas saem do repositório e ficam na biblioteca local de quem os criou. Produções existentes não mudam, porque cada uma guarda o snapshot do seu estilo; como o código mudou, produções da base sem aprovação precisam de nova prévia antes de aprovar.

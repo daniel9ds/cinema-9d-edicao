@@ -24,6 +24,10 @@ Planos ficam congelados após iniciar a montagem; para alterar cenas ou quantida
 
 Para vídeo (Veo, Omni), imagem (Nano Banana, Gemini), música (Lyria), narração (Chirp3, Gemini TTS) ou preparação com `avtool` pelos servidores MCP `genmedia-*`, leia [geração com o Google](../../docs/GERACAO-GOOGLE.md). Cada geração é cobrada e exige o OK explícito do usuário no chat para aquela chamada, com prompt, modelo, proporção, duração e custo estimado já mostrados. Pergunte o formato se ele não foi dito. Baixe sempre em `geracao/brutos/<id>/` da produção, registre com `bin/cinema-geracao registrar` e copie com `usar` para `elementos/gerados/` antes de referenciar nas cenas. Sem os servidores, siga com assets fornecidos. Mídia gerada é ilustração: não substitui prints, dados, pessoas ou a fala gravada.
 
+## Painel anamórfico / LED 3D (experimental, fora da edição de fala)
+
+Se o pedido falar em painel anamórfico, LED 3D, fachada 3D ou vídeo para painel curvo, leia [painel anamórfico com Blender](../../docs/ANAMORFICO-BLENDER.md) antes de propor qualquer coisa. Nenhum comando do método implementa esse fluxo: não use `iniciar`, `preparar`, `previa`, `aprovar` nem `final` para ele. Pergunte o briefing mínimo e o formato das peças, escreva os scripts na pasta da produção, mostre o frame de aprovação antes de animar e registre a aprovação do usuário ou do cliente por escrito, sem inventá-la. Serviços pagos seguem as mesmas regras de custo e autorização.
+
 ## Entrada e análise
 
 Se a produção ainda não existe, execute `iniciar "/pasta"` (opcional `--tema "Tema"` e `--video "/origem/take.mp4"`). Leia `job.json`, as instruções/documento de continuidade atuais, `roteiro/briefing.md`, `marca/identidade.json`, `interface/` e as referências relevantes. Tema e identidade pertencem à produção. Se houver `job.rendering` ou montagem `edicao/remotion-*`, use seus scripts: a configuração da raiz pode ser histórica. Não reinicie por cima de uma composição própria.
