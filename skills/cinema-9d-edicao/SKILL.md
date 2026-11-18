@@ -46,7 +46,7 @@ Use `framing`, `viewport` e `zoomTo` por cena quando necessário. `presenter: hi
 Use `captionMode`/`captionSuppression` para evitar legenda redundante com lettering. Uma palavra de destaque não substitui a informação de toda a frase. Cards, telas e conexões podem usar `elements`/`connections`; consulte os formatos, sem criar campos ignorados pelo renderizador.
 Nos perfis com lettering e logo controlado por cena, como `exemplo`, `lettering` mantém a altura e permite contorno/drift lateral; `branding` controla ocultação, revelação central e fixação superior do logo. `kind: icon` fornece ícones em camadas. O estilo não cria máscaras ou rastreamento. Confira fonte fornecida, área segura e leitura das legendas em frase.
 Use marca e arquivos reais fornecidos. Métricas e barras exigem valores com fonte. Marque ilustrações/simulações. Não invente prints, números ou resultados.
-Sons são opcionais e devem vir de arquivos autorizados ou de gerações aprovadas e registradas. Música só quando pedida; mantenha voz clara. Um som por movimento é uma referência de estilo, não obrigação para todas as edições.
+Sons são opcionais e devem vir de arquivos autorizados ou de gerações aprovadas e registradas. Música só quando pedida; mantenha voz clara. Um som por movimento é uma referência de estilo, não obrigação para todas as edições. Só quando o briefing ou o usuário pedir sonoplastia, siga [sonoplastia](../../docs/SONOPLASTIA.md): mapa de sons no plano, fontes com licença conferida (Openverse, Earshot local ou arquivos fornecidos), créditos em `elementos/sons/CREDITOS.md`, e downloads ou instalações só com o OK do usuário.
 
 ## Revisão e entrega
 

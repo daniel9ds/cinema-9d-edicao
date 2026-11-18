@@ -12,6 +12,12 @@ Guia `GERACAO-GOOGLE.md` para os servidores MCP `genmedia-*` (Veo, Omni, Nano Ba
 
 Limites: o renderizador central não tem cena de B-roll em vídeo. Vídeo gerado entra como still, por montagem própria ou por uma futura extensão do `SceneSchema`. Narração em primeiro plano também exige montagem própria. O custo registrado é estimativa do agente, não o faturamento.
 
+## Sonoplastia (guia opcional)
+
+Guia `SONOPLASTIA.md`, usado só quando o pedido inclui sonoplastia. Organiza o mapa de sons no plano de cenas, as fontes (arquivos fornecidos, sons do `setup`, banco local do Earshot e biblioteca Openverse), as regras de licença (CC0 preferido, CC BY com crédito, sem NC em trabalho comercial), o registro em `elementos/sons/CREDITOS.md` e a escuta antes da aprovação. Origem: ferramentas apresentadas por Cauhi (autor do Bolo de Camadas) num vídeo sobre som para vídeos feitos com IA.
+
+Limites: nenhum comando do método busca, baixa ou instala sons; o agente faz isso com autorização. O renderizador continua com um som por cena, iniciado no começo da cena, sem ducking. O Earshot não foi validado pelo método. Uma terceira ferramenta citada no vídeo (Real SFX) não foi incluída porque não foi possível verificá-la. Sem mudança de código nem de fingerprint.
+
 ## Painel anamórfico com Blender (guia experimental)
 
 Guia `ANAMORFICO-BLENDER.md`, generalizado de um único projeto real de painel LED 3D curvo: briefing mínimo, etapas (geometria do painel, câmera no ponto ótimo, render, desembrulhar, vídeos e simulado no prédio), modelos 3D gerados por IA, render longo, acompanhamento pelo MCP do Blender, aprovação com o cliente e serviços pagos. A skill aponta para o guia quando o pedido fala em anamórfico ou LED 3D.
