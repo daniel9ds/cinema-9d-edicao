@@ -6,9 +6,17 @@ Os scripts não entendem a fala nem observam gestos sozinhos. O agente analisa a
 
 Leia `ORQUESTRACAO.md`, `CRIAR-ESTILO.md` e `VALIDACAO-0.4.0.md`. Nenhuma produção antiga é migrada. A biblioteca de marca é privada e fica fora do método. Não há publicação automática.
 
+## Geração com o Google (0.4.0, complemento)
+
+Guia `GERACAO-GOOGLE.md` para os servidores MCP `genmedia-*` (Veo, Omni, Nano Banana, Gemini, Lyria, Chirp3, avtool). O guia exige aprovação explícita por geração e pergunta de formato. Os downloads vão para `geracao/brutos/` da produção. Comando local `bin/cinema-geracao` (`registrar`, `usar`, `descartar`, `status`) com manifesto `geracao/manifesto.json`: prompt, modelo, proporção, duração, custo estimado, aprovação e SHA-256 dos arquivos. O comando não chama provedores. `scripts/generation.ts` fica fora do fingerprint de render, então prévias, lotes e aprovações existentes continuam válidos.
+
+Limites: o renderizador central não tem cena de B-roll em vídeo. Vídeo gerado entra como still, por montagem própria ou por uma futura extensão do `SceneSchema`. Narração em primeiro plano também exige montagem própria. O custo registrado é estimativa do agente, não o faturamento.
+
 ## Publicação do repositório (0.4.0)
 
 O catálogo central passa a trazer o perfil neutro `exemplo` 1.0.0, com a identidade padrão do método. Ele é o padrão de `demo-estilo` e a base de `estilo-criar`. Perfis e estudos de marcas específicas saem do repositório e ficam na biblioteca local de quem os criou. Produções existentes não mudam, porque cada uma guarda o snapshot do seu estilo; como o código mudou, produções da base sem aprovação precisam de nova prévia antes de aprovar.
+
+O README passa a usar painéis largos (1600 px) com arte de fundo gerada por IA (Codex, sem pessoas reais nem telas reais) e textos e diagramas vetoriais gerados por `docs/assets/readme/gerar.mjs`, com animação CSS que para com `prefers-reduced-motion`. Os quadros sintéticos de `examples/` saíram do repositório: `demo`, `demo-estilo` e `previa` geram os mesmos resultados localmente. A prévia social do GitHub fica em `docs/assets/readme/social-preview.jpg` e é enviada à mão em Settings.
 
 ## Histórico 0.3.0
 

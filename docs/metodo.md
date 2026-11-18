@@ -103,13 +103,13 @@ Os três sons incluídos são sintetizados no setup com FFmpeg. Cada cena pode u
 
 O render copia somente o take e os assets usados para `trabalho/remotion/public/versions/<hash>/`, com endereços por conteúdo. Versões anteriores ficam no cache para não quebrar a última prévia válida. O cache pode ser limpo quando Studio/render estiverem fechados; o próximo preparo o recria. Não disponibiliza toda a pasta do cliente no Studio. Usa cópias, preservando o original. Exportações têm data e não são sobrescritas. JSONs de decisão guardam cópias em `revisoes/` antes de alterações feitas pelos scripts; se o agente editar JSONs diretamente, deve salvar uma revisão antes.
 
-O processamento de mídia e reconhecimento são locais. Nenhum comando chama API de IA nem inicia outro agente. Codex/Claude é quem interpreta o briefing e modifica os arquivos ao ser solicitado. Uploads, geração paga e publicação exigem autorização específica.
+O processamento de mídia e reconhecimento são locais. Nenhum comando chama API de IA nem inicia outro agente. Mídia gerada por serviços externos segue [geração com o Google](GERACAO-GOOGLE.md): pasta `geracao/`, manifesto com hashes e cópia em `elementos/gerados/`. Codex/Claude é quem interpreta o briefing e modifica os arquivos ao ser solicitado. Uploads, geração paga e publicação exigem autorização específica.
 
 ## Qualidade e limites da base
 
 `validar` verifica estrutura, tempos, arquivos, origem do take e continuidade das cenas. O render verifica áudio, duração e resolução e salva uma medição de loudness no relatório. A aprovação final inclui os hashes da mídia utilizada, os dados do render e o código do método que gera a composição: alterar qualquer um exige nova revisão.
 
-Isso não substitui assistir e ouvir. Confira: palavras e números, cortes sem sílabas perdidas, foco do rosto, contraste, leitura no celular, assets corretos e som sem encobrir a voz. Esta versão não inclui remoção de fundo, diarização, redução de ruído, rastreamento de rosto ou geração automática de imagens.
+Isso não substitui assistir e ouvir. Confira: palavras e números, cortes sem sílabas perdidas, foco do rosto, contraste, leitura no celular, assets corretos e som sem encobrir a voz. Esta versão não inclui remoção de fundo, diarização, redução de ruído, rastreamento de rosto, geração automática de imagens nem cena de B-roll em vídeo no renderizador central.
 
 Para motion específico fora dos tipos e componentes disponíveis, crie um componente determinístico no Remotion, revise seu efeito sobre os demais trabalhos e rode `check`, os testes e uma renderização de demonstração. Mantenha fontes/dados com a produção e o código reutilizável no método.
 

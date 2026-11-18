@@ -24,6 +24,6 @@ Depois da troca do perfil de exemplo do catálogo pelo perfil neutro `exemplo` 1
 - TypeScript: aprovado. Testes: 26 aprovados.
 - Base: 13 etapas aprovadas ([relatório](validacao-base-0.4.0.json)). A checagem de supressão de legenda passou a aceitar diferença de luminância em qualquer direção, porque o perfil novo tem fundo escuro.
 - Orquestração: 11 etapas aprovadas ([relatório](validacao-orquestracao-0.4.0.json)).
-- Estudo do perfil `exemplo` gerado com `demo-estilo` e `previa`; os quadros em `examples/exemplo-estilo-1.0.0-*` foram inspecionados visualmente.
+- Estudo do perfil `exemplo` gerado com `demo-estilo` e `previa`; os quadros foram inspecionados visualmente. Eles não ficam no repositório; rode `demo-estilo` e `previa` para gerá-los de novo.
 
 Os relatórios versionados refletem esta execução. Os resultados de 28/10/2026 descritos acima foram obtidos com o perfil anterior.

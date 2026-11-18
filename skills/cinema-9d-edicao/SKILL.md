@@ -20,6 +20,10 @@ O agente ativo deve conduzir o fluxo, sem simplesmente devolver ao usuário o ca
 
 Planos ficam congelados após iniciar a montagem; para alterar cenas ou quantidade, preserve o lote e use `--novo`. Versões têm diretórios próprios. Uma montagem própria `edicao/remotion-*` precisa de seu workflow e não é sobrescrita pelo lote central. Não contorne fingerprints ou registros. Mostre a galeria local, espere o OK explícito do usuário e só então use `aprovar-lote --por` e `finalizar-lote`. Nunca preencha aprovação humana com a revisão técnica/criativa do agente.
 
+## Mídia gerada (opcional, paga)
+
+Para vídeo (Veo, Omni), imagem (Nano Banana, Gemini), música (Lyria), narração (Chirp3, Gemini TTS) ou preparação com `avtool` pelos servidores MCP `genmedia-*`, leia [geração com o Google](../../docs/GERACAO-GOOGLE.md). Cada geração é cobrada e exige o OK explícito do usuário no chat para aquela chamada, com prompt, modelo, proporção, duração e custo estimado já mostrados. Pergunte o formato se ele não foi dito. Baixe sempre em `geracao/brutos/<id>/` da produção, registre com `bin/cinema-geracao registrar` e copie com `usar` para `elementos/gerados/` antes de referenciar nas cenas. Sem os servidores, siga com assets fornecidos. Mídia gerada é ilustração: não substitui prints, dados, pessoas ou a fala gravada.
+
 ## Entrada e análise
 
 Se a produção ainda não existe, execute `iniciar "/pasta"` (opcional `--tema "Tema"` e `--video "/origem/take.mp4"`). Leia `job.json`, as instruções/documento de continuidade atuais, `roteiro/briefing.md`, `marca/identidade.json`, `interface/` e as referências relevantes. Tema e identidade pertencem à produção. Se houver `job.rendering` ou montagem `edicao/remotion-*`, use seus scripts: a configuração da raiz pode ser histórica. Não reinicie por cima de uma composição própria.
@@ -38,7 +42,7 @@ Use `framing`, `viewport` e `zoomTo` por cena quando necessário. `presenter: hi
 Use `captionMode`/`captionSuppression` para evitar legenda redundante com lettering. Uma palavra de destaque não substitui a informação de toda a frase. Cards, telas e conexões podem usar `elements`/`connections`; consulte os formatos, sem criar campos ignorados pelo renderizador.
 Nos perfis com lettering e logo controlado por cena, como `exemplo`, `lettering` mantém a altura e permite contorno/drift lateral; `branding` controla ocultação, revelação central e fixação superior do logo. `kind: icon` fornece ícones em camadas. O estilo não cria máscaras ou rastreamento. Confira fonte fornecida, área segura e leitura das legendas em frase.
 Use marca e arquivos reais fornecidos. Métricas e barras exigem valores com fonte. Marque ilustrações/simulações. Não invente prints, números ou resultados.
-Sons são opcionais e devem vir de arquivos autorizados. Música só quando pedida; mantenha voz clara. Um som por movimento é uma referência de estilo, não obrigação para todas as edições.
+Sons são opcionais e devem vir de arquivos autorizados ou de gerações aprovadas e registradas. Música só quando pedida; mantenha voz clara. Um som por movimento é uma referência de estilo, não obrigação para todas as edições.
 
 ## Revisão e entrega
 

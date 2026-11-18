@@ -1,224 +1,228 @@
-// Gera as ilustrações do README em SVG estático, nas versões clara e escura.
-// Uso: node docs/assets/readme/gerar.mjs  (sem dependências, sem fontes externas)
-import {writeFileSync} from 'node:fs';
-import {fileURLToPath} from 'node:url';
+// Gera os painéis SVG do README a partir das artes em ./arte/*.jpg.
+// Uso: node docs/assets/readme/gerar.mjs
+// As artes de fundo foram geradas por IA (imgpt / Codex) e são ilustrações: não mostram telas reais do método.
+// Textos e diagramas são vetores escritos aqui. Sem scripts e sem fontes externas; a animação é CSS e para com
+// prefers-reduced-motion.
+import fs from 'node:fs';
 import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 
-const OUT = path.dirname(fileURLToPath(import.meta.url));
-const SANS = "ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
-const MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace";
+const dir = path.dirname(fileURLToPath(import.meta.url));
+const art = name => 'data:image/jpeg;base64,' + fs.readFileSync(path.join(dir, 'arte', name + '.jpg')).toString('base64');
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-// Paleta derivada da identidade padrão do método (src/schema.ts) e funções do fluxo.
-const THEMES = {
-  escuro: {bg:'#101419', panel:'#171d24', panel2:'#1d242d', line:'#2c3540', fg:'#f5f6f1', muted:'#aab1ba',
-    auto:'#7cc7ff', agente:'#a4ff63', pessoa:'#ff9e7a', logo:'#f5f6f1', glow:'#a4ff63'},
-  claro:  {bg:'#f6f7f3', panel:'#ffffff', panel2:'#eef0ec', line:'#d5dad2', fg:'#101419', muted:'#4b5560',
-    auto:'#1d65a6', agente:'#3a7a0c', pessoa:'#b8441f', logo:'#101419', glow:'#7ed23f'},
-};
+const C = {bg: '#0b0e12', ink: '#f5f6f1', muted: '#aab1ba', dim: '#7b8590', line: 'rgba(255,255,255,0.12)',
+  lime: '#a4ff63', cyan: '#7cc7ff', peach: '#ff9e7a', card: 'rgba(10,13,17,0.80)'};
+const ROLE = {VOCÊ: C.peach, AGENTE: C.lime, AUTO: C.cyan};
+const SANS = "'Helvetica Neue',Helvetica,Arial,sans-serif";
+const MONO = "SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace";
+const LOGO = fs.readFileSync(path.join(dir, 'logo-9d.svg'), 'utf8').match(/ d="([^"]+)"/)[1];
 
-// Símbolo 9D (logo-9d.svg, viewBox 184.72 × 139.64).
-const LOGO = 'M113.8,91.44c-25.82,2.86-37.85,10.09-38.87,48.2h-15.53c-.72-.05-1.44-.08-2.17-.08H.23c0-47.1,12.83-39.38,57-39.38,7.63,0,13.03-3.53,16.19-10.61h-28.77c-12.28,0-22.78-4.43-31.52-13.25C4.39,67.47,0,56.94,0,44.66S4.39,21.85,13.14,13.1C21.88,4.35,32.38,0,44.66,0c27.63,0,55.24.05,82.86.05,15.82,0,29.29,6.58,40.45,17.75,11.16,11.16,16.75,24.64,16.75,40.45v25.12c0,15.82-5.58,29.33-16.75,40.49-9.5,9.5-20.59,13.88-32.41,15.78h-50.43c.23-32.87,13.83-37.56,28.04-38.01h.65s15.21,0,15.21,0c9.26-.51,16.31-3.59,16.31-18.26v-25.08c0-4.84-1.75-9.04-5.28-12.58-3.53-3.53-7.75-5.28-12.54-5.28h-13.71v.07s0,22.26,0,22.26c.04,9.31.1,18.47,0,28.68h0ZM80.5,52.14c-4.48-9.96-12.12-14.96-22.92-14.96h-17.81c-5.01,0-7.48,2.48-7.48,7.48s2.48,7.48,7.48,7.48h40.72Z';
-const logo = (x, y, h, fill) => `<path transform="translate(${x} ${y}) scale(${(h/139.64).toFixed(4)})" fill="${fill}" d="${LOGO}"/>`;
+const css = `
+.eb{font:600 16px ${MONO};letter-spacing:3px;fill:${C.lime}}
+.t{font:700 60px ${SANS};letter-spacing:-1.2px;fill:${C.ink}}
+.s{font:400 22px ${SANS};fill:${C.muted}}
+.m{font:500 14px ${MONO};letter-spacing:2px;fill:${C.muted}}
+.ms{font:500 12px ${MONO};letter-spacing:1.5px;fill:${C.dim}}
+.ct{font:700 25px ${SANS};fill:${C.ink}}
+.cd{font:400 15px ${SANS};fill:#c3c9d0}
+.cm{font:500 14px ${MONO};fill:${C.lime}}
+.cn{font:500 13px ${MONO};letter-spacing:1px;fill:${C.dim}}
+.chip{font:600 11px ${MONO};letter-spacing:1.5px}
+.pulse{animation:pulse 2.4s ease-in-out infinite}
+.run{animation:run 7s linear infinite}
+.flow{stroke-dasharray:6 9;animation:flow 1.1s linear infinite}
+.grow{transform-origin:64px 0;animation:grow 3.5s ease-out infinite alternate}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes run{from{transform:translateX(0)}to{transform:translateX(1472px)}}
+@keyframes flow{to{stroke-dashoffset:-15}}
+@keyframes grow{from{transform:scaleX(.25)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}`;
 
-const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-const text = (x, y, s, o = {}) => `<text x="${x}" y="${y}" font-family="${o.mono?MONO:SANS}" font-size="${o.size??20}"${o.weight?` font-weight="${o.weight}"`:''} fill="${o.fill}"${o.anchor?` text-anchor="${o.anchor}"`:''}${o.ls?` letter-spacing="${o.ls}"`:''}${o.extra??''}>${esc(s)}</text>`;
-const svg = (w, h, title, desc, body) => `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="t d">
+function panel({file, w = 1600, h, image, title, desc, body, artX = 0, artW = w, fade = 'full', rx = 28}) {
+  const fades = fade === 'full'
+    ? `<rect width="${w}" height="${h}" fill="url(#fx)"/><rect width="${w}" height="${h}" fill="url(#fy)"/>`
+    : `<rect width="${w}" height="${h}" fill="url(#fs)"/>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-labelledby="t d">
 <title id="t">${esc(title)}</title>
 <desc id="d">${esc(desc)}</desc>
+<defs>
+<style>${css}</style>
+<clipPath id="r"><rect width="${w}" height="${h}" rx="${rx}"/></clipPath>
+<linearGradient id="fx" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="${C.bg}" stop-opacity=".94"/><stop offset=".5" stop-color="${C.bg}" stop-opacity=".6"/><stop offset="1" stop-color="${C.bg}" stop-opacity=".3"/></linearGradient>
+<linearGradient id="fy" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${C.bg}" stop-opacity=".85"/><stop offset=".42" stop-color="${C.bg}" stop-opacity="0"/><stop offset=".85" stop-color="${C.bg}" stop-opacity=".2"/><stop offset="1" stop-color="${C.bg}" stop-opacity=".75"/></linearGradient>
+<linearGradient id="fs" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="${C.bg}"/><stop offset=".42" stop-color="${C.bg}"/><stop offset=".62" stop-color="${C.bg}" stop-opacity=".35"/><stop offset="1" stop-color="${C.bg}" stop-opacity=".15"/></linearGradient>
+<marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="${C.muted}"/></marker>
+<marker id="ap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="${C.peach}"/></marker>
+</defs>
+<g clip-path="url(#r)">
+<rect width="${w}" height="${h}" fill="${C.bg}"/>
+<image href="${art(image)}" x="${artX}" y="0" width="${artW}" height="${h}" preserveAspectRatio="xMidYMid slice"/>
+${fades}
 ${body}
+</g>
+${rx ? `<rect x=".5" y=".5" width="${w - 1}" height="${h - 1}" rx="${rx}" fill="none" stroke="${C.line}"/>` : ''}
 </svg>
 `;
+  fs.writeFileSync(path.join(dir, file), svg);
+}
 
-// Ícones de traço em grade 24×24.
-const ICONS = {
-  materiais: 'M3 7h7l2 2h9v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z M7 13h10 M7 16h6',
-  transcricao: 'M3 12h2 M7 8v8 M11 5v14 M15 9v6 M19 11v2 M21 12h0',
-  direcao: 'M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z M18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z',
-  previa: 'M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z M10.5 9.5v5l4-2.5z',
-  revisao: 'M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z M12 9.2a2.8 2.8 0 1 0 0 5.6a2.8 2.8 0 1 0 0-5.6z',
-  aprovacao: 'M12 3l7.5 3v5.5c0 4.5-3.2 8-7.5 9.5-4.3-1.5-7.5-5-7.5-9.5V6z M8.5 12l2.5 2.5 4.5-5',
-  exportacao: 'M12 4v11 M7.5 10.5L12 15l4.5-4.5 M5 19h14',
-  engrenagem: 'M12 8.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 1 0 0-7z M12 2.5v3 M12 18.5v3 M2.5 12h3 M18.5 12h3 M5.3 5.3l2.1 2.1 M16.6 16.6l2.1 2.1 M5.3 18.7l2.1-2.1 M16.6 7.4l2.1-2.1',
-  pessoa: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8z M4.5 20.5c1-4 4-6 7.5-6s6.5 2 7.5 6',
-  pasta: 'M3 7h7l2 2h9v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z',
-  cadeado: 'M7 11V8a5 5 0 0 1 10 0v3 M5.5 11h13v9.5h-13z',
+const head = (eb, t, s) => `<text class="eb" x="64" y="80">${esc(eb)}</text>
+<text class="t" x="64" y="148">${esc(t)}</text>
+${s ? `<text class="s" x="64" y="190">${esc(s)}</text>` : ''}`;
+const card = (x, y, w, h, stroke = C.line) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="${C.card}" stroke="${stroke}"/>`;
+const chip = (xr, y, role) => {
+  const label = role === 'AUTO' ? 'AUTOMÁTICO' : role, cw = label.length * 8 + 18;
+  return `<rect x="${xr - cw}" y="${y}" width="${cw}" height="22" rx="11" fill="none" stroke="${ROLE[role]}" stroke-opacity=".7"/><text class="chip" x="${xr - cw / 2}" y="${y + 15}" text-anchor="middle" fill="${ROLE[role]}">${label}</text>`;
 };
-const icon = (name, x, y, size, stroke, sw = 1.8) =>
-  `<path transform="translate(${x} ${y}) scale(${size/24})" d="${ICONS[name]}" fill="none" stroke="${stroke}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"/>`;
+const legend = (x, y) => [['VOCÊ', C.peach], ['AGENTE (CODEX OU CLAUDE CODE)', C.lime], ['AUTOMÁTICO (SCRIPTS LOCAIS)', C.cyan]]
+  .map(([l, c], i) => { const xx = x + [0, 120, 470][i]; return `<circle cx="${xx + 5}" cy="${y - 5}" r="5" fill="${c}"/><text class="m" x="${xx + 18}" y="${y}">${l}</text>`; }).join('');
 
-const ROLE = {auto:'AUTOMÁTICO', agente:'AGENTE', pessoa:'PESSOA'};
-const roleIcon = {auto:'engrenagem', agente:'direcao', pessoa:'pessoa'};
+// ---------- HERO ----------
+panel({file: 'hero.svg', h: 680, image: 'hero',
+  title: 'Cinema 9D Edição',
+  desc: 'Cinema 9D Edição: sua gravação de fala vira vídeo vertical editado, com cortes, legendas e motion, usando Codex ou Claude Code e ferramentas locais (Whisper, Remotion, FFmpeg). Ilustração de uma mesa de edição à noite.',
+  body: `<g transform="translate(64 40) scale(.25)"><path d="${LOGO}" fill="${C.ink}"/></g>
+<text class="m" x="128" y="66" fill="${C.ink}">CINEMA 9D <tspan fill="${C.dim}">/</tspan> EDIÇÃO</text>
+<circle class="pulse" cx="1262" cy="61" r="6" fill="${C.peach}"/><text class="m" x="1276" y="66" fill="${C.peach}">REC</text>
+<text class="m" x="1536" y="66" text-anchor="end">CODEX · CLAUDE CODE</text>
+<line x1="64" y1="104" x2="1536" y2="104" stroke="${C.line}"/>
+<line class="grow" x1="64" y1="104" x2="260" y2="104" stroke="${C.lime}" stroke-width="2"/>
+<text class="eb" x="64" y="196" style="font-size:18px">SUA GRAVAÇÃO. SEU AGENTE. SEU COMPUTADOR.</text>
+<text x="58" y="326" style="font:800 128px ${SANS};letter-spacing:-4px;fill:${C.ink}">CINEMA 9D</text>
+<text x="58" y="446" style="font:800 128px ${SANS};letter-spacing:-4px;fill:${C.lime}">EDIÇÃO</text>
+<text class="s" x="64" y="510" style="font-size:25px;fill:#d5dae0">Fala gravada vira vídeo vertical editado:</text>
+<text class="s" x="64" y="544" style="font-size:25px;fill:#d5dae0">cortes, legendas e motion, com a sua aprovação.</text>
+<line x1="64" y1="598" x2="1536" y2="598" stroke="${C.line}"/>
+<text class="m" x="64" y="638">CORTES</text><text class="m" x="200" y="638">LEGENDAS</text><text class="m" x="364" y="638">MOTION</text><text class="m" x="496" y="638">APROVAÇÃO</text>
+<text class="m" x="1536" y="638" text-anchor="end" fill="${C.lime}">WHISPER LOCAL · REMOTION · FFMPEG</text>`});
 
-// ---------- Banner ----------
-function banner(c) {
-  const W = 960, H = 380;
-  const waves = Array.from({length: 18}, (_, i) => {
-    const h = [10,22,36,18,44,28,52,30,16,40,24,48,20,34,14,26,38,12][i];
-    return `<rect x="${742 + i*9}" y="${288 - h/2}" width="5" height="${h}" rx="2.5" fill="${c.agente}" opacity="${0.35 + (i%3)*0.2}"/>`;
-  }).join('');
-  return svg(W, H, 'Cinema 9D Edição',
-    'Banner: símbolo 9D, o nome Cinema 9D Edição e a frase “Sua gravação de fala vira vídeo vertical editado, com seu agente de IA e ferramentas locais”. À direita, um celular estilizado com legenda e forma de onda.',
-`<defs>
-  <radialGradient id="g" cx="0.82" cy="0.35" r="0.6"><stop offset="0" stop-color="${c.glow}" stop-opacity="0.16"/><stop offset="1" stop-color="${c.glow}" stop-opacity="0"/></radialGradient>
-  <clipPath id="f"><rect width="${W}" height="${H}" rx="24"/></clipPath>
-</defs>
-<g clip-path="url(#f)">
-  <rect width="${W}" height="${H}" fill="${c.bg}"/>
-  <rect width="${W}" height="${H}" fill="url(#g)"/>
-  <rect x="0.5" y="0.5" width="${W-1}" height="${H-1}" rx="23.5" fill="none" stroke="${c.line}"/>
-  ${logo(56, 58, 46, c.logo)}
-  ${text(132, 92, 'MÉTODO LOCAL · CODEX + CLAUDE CODE', {mono:true, size:15, fill:c.muted, ls:2})}
-  ${text(54, 184, 'Cinema 9D Edição', {size:66, weight:800, fill:c.fg, ls:-1})}
-  ${text(56, 236, 'Sua gravação de fala vira vídeo vertical', {size:27, fill:c.muted})}
-  ${text(56, 272, 'editado, com seu agente de IA e ferramentas locais.', {size:27, fill:c.muted})}
-  <g font-family="${MONO}" font-size="15" letter-spacing="1">
-    <rect x="56" y="304" width="126" height="34" rx="17" fill="none" stroke="${c.auto}"/>${text(119, 326, 'cortes', {mono:true, size:15, fill:c.auto, anchor:'middle'})}
-    <rect x="194" y="304" width="132" height="34" rx="17" fill="none" stroke="${c.agente}"/>${text(260, 326, 'legendas', {mono:true, size:15, fill:c.agente, anchor:'middle'})}
-    <rect x="338" y="304" width="118" height="34" rx="17" fill="none" stroke="${c.pessoa}"/>${text(397, 326, 'motion', {mono:true, size:15, fill:c.pessoa, anchor:'middle'})}
-  </g>
-  <rect x="724" y="40" width="188" height="300" rx="26" fill="${c.panel}" stroke="${c.line}" stroke-width="2"/>
-  <rect x="740" y="58" width="156" height="200" rx="14" fill="${c.panel2}"/>
-  ${icon('pessoa', 782, 92, 72, c.muted, 1.4)}
-  <rect x="752" y="214" width="132" height="30" rx="8" fill="${c.bg}" opacity="0.92"/>
-  ${text(818, 235, 'sua fala aqui', {size:16, weight:700, fill:c.fg, anchor:'middle'})}
-  <rect x="770" y="241" width="40" height="2.5" rx="1.25" fill="${c.agente}"/>
-  ${waves}
-  <rect x="790" y="318" width="56" height="5" rx="2.5" fill="${c.line}"/>
-</g>`);
-}
+// ---------- 01 FLUXO ----------
+const steps = [
+  ['GRAVAR', 'VOCÊ', 'vídeo, marca e briefing', 'iniciar'],
+  ['PREPARAR', 'AUTO', 'transcrição e cortes', 'preparar'],
+  ['DIRIGIR', 'AGENTE', 'cortes, cenas e telas', 'planejar'],
+  ['PRÉVIA', 'AUTO', 'MP4 540×960', 'previa'],
+  ['APROVAR', 'VOCÊ', 'você assiste e dá o OK', 'aprovar'],
+  ['FINAL', 'AUTO', 'MP4 1080×1920', 'final'],
+];
+const SX = i => 64 + i * 250, SY = 262, SW = 222, SH = 146;
+panel({file: 'fluxo.svg', h: 560, image: 'fluxo',
+  title: 'Da gravação ao vídeo final',
+  desc: 'Fluxo em seis etapas: 1 gravar (você: vídeo, marca e briefing, comando iniciar); 2 preparar (automático: transcrição local e proposta de cortes, comando preparar); 3 dirigir (agente: cortes, cenas e telas, comando planejar); 4 prévia (automático: MP4 540×960, comando previa); 5 aprovar (você assiste e dá o OK, comando aprovar); 6 final (automático: MP4 1080×1920, comando final). Uma seta tracejada leva os ajustes da aprovação de volta à direção: qualquer mudança exige nova prévia e nova aprovação.',
+  body: `${head('01 / FLUXO', 'Da gravação ao vídeo final.', 'O agente dirige, os scripts executam e nada é exportado sem o seu OK.')}
+<line x1="64" y1="240" x2="1536" y2="240" stroke="${C.line}"/>
+<circle class="run" cx="64" cy="240" r="4" fill="${C.lime}"/>
+${steps.map(([t, role, d, cmd], i) => {
+    const x = SX(i);
+    return `${card(x, SY, SW, SH, i === 4 ? 'rgba(255,158,122,.45)' : C.line)}
+<text class="cn" x="${x + 20}" y="${SY + 34}">0${i + 1}</text>${chip(x + SW - 16, SY + 18, role)}
+<text class="ct" x="${x + 20}" y="${SY + 76}">${t}</text>
+<text class="cd" x="${x + 20}" y="${SY + 102}">${esc(d)}</text>
+<text class="cm" x="${x + 20}" y="${SY + 128}" fill="${ROLE[role]}">${cmd}</text>
+${i < 5 ? `<line x1="${x + SW + 3}" y1="${SY + SH / 2}" x2="${x + 247}" y2="${SY + SH / 2}" stroke="${C.muted}" stroke-width="1.5" marker-end="url(#a)"/>` : ''}`;
+  }).join('\n')}
+<path class="flow" d="M${SX(4) + SW / 2} ${SY + SH + 2} V ${SY + SH + 34} H ${SX(2) + SW / 2} V ${SY + SH + 8}" fill="none" stroke="${C.peach}" stroke-width="1.6" marker-end="url(#ap)"/>
+<text class="cn" x="${(SX(2) + SX(4)) / 2 + SW / 2}" y="${SY + SH + 60}" text-anchor="middle" fill="${C.peach}">AJUSTE → VOLTA À DIREÇÃO · NOVA PRÉVIA · NOVA APROVAÇÃO</text>
+${legend(64, 528)}`});
 
-// ---------- Fluxo ----------
-function fluxo(c) {
-  const W = 720, X = 40, CW = 556, CH = 104, GAP = 22, TOP = 214;
-  const steps = [
-    ['materiais', 'Materiais e briefing', 'Gravação, marca, telas e objetivo', ['pessoa'], ''],
-    ['transcricao', 'Transcrição e proposta de cortes', 'Whisper local, quadros e pausas', ['auto'], 'preparar'],
-    ['direcao', 'Direção e montagem', 'Revisa cortes, cria cenas e motion', ['agente','auto'], 'planejar'],
-    ['previa', 'Prévia', 'MP4 540×960 e quadros para conferir', ['auto'], 'previa'],
-    ['revisao', 'Revisão humana', 'Fala, leitura, ritmo e marca', ['pessoa'], ''],
-    ['aprovacao', 'Aprovação da revisão atual', 'Registro ligado ao MP4 conferido', ['pessoa'], 'aprovar'],
-    ['exportacao', 'Exportação final', 'MP4 1080×1920 e relatório técnico', ['auto'], 'final'],
-  ];
-  const y = i => TOP + i*(CH + GAP);
-  const H = y(steps.length) + 118;
-  const cards = steps.map(([ic, title, sub, roles, cmd], i) => {
-    const top = y(i), main = c[roles[0]];
-    const chips = roles.map(r => ROLE[r]).join(' + ');
-    return `<g>
-  <rect x="${X}" y="${top}" width="${CW}" height="${CH}" rx="14" fill="${c.panel}" stroke="${c.line}"/>
-  <rect x="${X}" y="${top}" width="6" height="${CH}" rx="3" fill="${main}"/>
-  <circle cx="${X+48}" cy="${top+CH/2}" r="25" fill="none" stroke="${main}" stroke-width="2"/>
-  ${icon(ic, X+34, top+CH/2-14, 28, main)}
-  ${text(X+90, top+32, `${String(i+1).padStart(2,'0')} · ${chips}`, {mono:true, size:14, fill:main, ls:1.5})}
-  ${cmd ? text(X+CW-20, top+32, cmd, {mono:true, size:14, fill:c.muted, anchor:'end'}) : ''}
-  ${text(X+90, top+64, title, {size:24, weight:700, fill:c.fg})}
-  ${text(X+90, top+89, sub, {size:17, fill:c.muted})}
-</g>`;
-  }).join('\n');
-  const arrows = steps.slice(1).map((_, i) => {
-    const a = y(i) + CH, b = y(i+1);
-    return `<path d="M${X+48} ${a+2}V${b-4}" stroke="${c.line}" stroke-width="2.5"/><path d="M${X+42} ${b-10}l6 7 6-7" fill="none" stroke="${c.muted}" stroke-width="2"/>`;
-  }).join('');
-  // Retorno: da revisão humana (5) para a direção e montagem (3).
-  const yr = y(4) + CH/2, yd = y(2) + CH/2, xr = X + CW + 50;
-  const loop = `<path d="M${X+CW} ${yr}H${xr}V${yd}H${X+CW+10}" fill="none" stroke="${c.pessoa}" stroke-width="2.5" stroke-dasharray="7 6"/>
-  <path d="M${X+CW+18} ${yd-7}l-9 7 9 7" fill="none" stroke="${c.pessoa}" stroke-width="2.5" stroke-linejoin="round"/>
-  ${text(xr+24, (yr+yd)/2, 'AJUSTES VOLTAM À EDIÇÃO', {mono:true, size:13, fill:c.pessoa, anchor:'middle', ls:1.5, extra:` transform="rotate(-90 ${xr+24} ${(yr+yd)/2})"`})}`;
-  const legend = [['auto','Automático','scripts locais'],['agente','Agente','Codex ou Claude'],['pessoa','Pessoa','você decide']].map(([r, a, b], i) => {
-    const lx = X + i*214;
-    return `<rect x="${lx}" y="132" width="200" height="52" rx="12" fill="${c.panel2}"/>
-  ${icon(roleIcon[r], lx+14, 144, 28, c[r])}
-  ${text(lx+52, 155, a, {size:17, weight:700, fill:c[r]})}
-  ${text(lx+52, 175, b, {size:14, fill:c.muted})}`;
-  }).join('\n');
-  const fy = y(steps.length) + 4;
-  return svg(W, H, 'Fluxo de produção do Cinema 9D Edição',
-    'Sete etapas em sequência: 1 materiais e briefing (pessoa); 2 transcrição e proposta de cortes (automático, comando preparar); 3 direção e montagem (agente e automático); 4 prévia (automático, comando previa); 5 revisão humana (pessoa); 6 aprovação da revisão atual (pessoa, comando aprovar); 7 exportação final (automático, comando final). Uma seta tracejada leva os ajustes da revisão humana de volta à direção e montagem. Qualquer mudança invalida a aprovação anterior e exige nova prévia e nova aprovação.',
-`<rect width="${W}" height="${H}" rx="24" fill="${c.bg}"/>
-<rect x="0.5" y="0.5" width="${W-1}" height="${H-1}" rx="23.5" fill="none" stroke="${c.line}"/>
-${logo(X, 40, 26, c.logo)}
-${text(X+46, 61, 'FLUXO DE PRODUÇÃO', {mono:true, size:14, fill:c.muted, ls:2})}
-${text(X, 110, 'Da gravação ao MP4 final', {size:34, weight:800, fill:c.fg})}
-${legend}
-${arrows}
-${cards}
-${loop}
-<rect x="${X}" y="${fy}" width="${CW+76}" height="86" rx="14" fill="none" stroke="${c.pessoa}" stroke-dasharray="7 6"/>
-${icon('cadeado', X+20, fy+28, 30, c.pessoa)}
-${text(X+66, fy+36, 'Mudou corte, cena, legenda, marca ou mídia?', {size:18, weight:700, fill:c.fg})}
-${text(X+66, fy+62, 'A aprovação anterior deixa de valer: nova prévia, nova aprovação.', {size:16, fill:c.muted})}`);
-}
+// ---------- 02 ESTRUTURA ----------
+const prods = ['A', 'B', 'C'];
+const PX = i => 650 + i * 316, PY = 262, PW = 270, PH = 228;
+const rows = [['entrada/', 'gravação, só leitura'], ['marca/', 'logo, cores e fonte'], ['edicao/', 'cortes, cenas, OK'], ['saida/', 'prévias e finais']];
+panel({file: 'estrutura.svg', h: 560, image: 'estrutura',
+  title: 'Um método, produções independentes',
+  desc: 'Estrutura: à esquerda, a instalação central do método em ~/projetos/cinema-9d-edicao, clonada uma vez, com bin/cinema-edicao, scripts, src (Remotion), skills, styles e docs. Abaixo dela, a biblioteca local opcional com estilos e kits, fora do Git. O método opera cada produção pelo caminho absoluto. À direita, três produções independentes (A, B e C), em qualquer pasta, cada uma com entrada (gravação original, só leitura), marca, edicao e saida. Ilustração de um cubo central ligado a caixas separadas.',
+  body: `${head('02 / ESTRUTURA', 'Um método. Várias produções.', 'O repositório guarda a receita. Cada vídeo vive na sua própria pasta.')}
+${card(64, PY, 470, 168, 'rgba(164,255,99,.45)')}
+<text class="cn" x="88" y="${PY + 34}" fill="${C.lime}">MÉTODO · CLONADO UMA VEZ</text>
+<text x="88" y="${PY + 74}" style="font:700 21px ${MONO};fill:${C.ink}">~/projetos/cinema-9d-edicao</text>
+<text class="cd" x="88" y="${PY + 110}">bin/cinema-edicao · scripts · src (Remotion)</text>
+<text class="cd" x="88" y="${PY + 136}">skills · styles · docs</text>
+<rect x="64" y="${PY + 184}" width="470" height="44" rx="22" fill="${C.card}" stroke="${C.muted}" stroke-opacity=".5" stroke-dasharray="5 6"/>
+<text class="cn" x="88" y="${PY + 211}">BIBLIOTECA LOCAL · ESTILOS E KITS · FORA DO GIT</text>
+<path class="flow" d="M536 ${PY + 84} H 600 V 236 H ${PX(2) + PW / 2}" fill="none" stroke="${C.lime}" stroke-width="1.6"/>
+<text class="ms" x="616" y="226" fill="${C.lime}">O MÉTODO OPERA CADA PRODUÇÃO PELO CAMINHO ABSOLUTO</text>
+${prods.map((p, i) => {
+    const x = PX(i);
+    return `<line x1="${x + PW / 2}" y1="236" x2="${x + PW / 2}" y2="${PY - 2}" stroke="${C.lime}" stroke-width="1.6" marker-end="url(#a)"/>
+<circle class="pulse" cx="${x + PW / 2}" cy="236" r="4" fill="${C.lime}" style="animation-delay:${i * .5}s"/>
+${card(x, PY, PW, PH)}
+<text class="cn" x="${x + 20}" y="${PY + 34}" fill="${C.cyan}">PRODUÇÃO ${p}</text>
+<text class="ct" x="${x + 20}" y="${PY + 68}" style="font-size:21px">qualquer pasta</text>
+${rows.map(([n, d], j) => `<text class="cm" x="${x + 20}" y="${PY + 108 + j * 31}" fill="${C.ink}">${n}</text><text class="cd" x="${x + 104}" y="${PY + 108 + j * 31}" style="font-size:14px">${esc(d)}</text>`).join('')}`;
+  }).join('\n')}
+<text class="m" x="64" y="534">ORIGINAIS INTOCADOS / NADA SE MISTURA / CADA PRODUÇÃO GUARDA SUA CÓPIA DO ESTILO</text>`});
 
-// ---------- Estrutura ----------
-function estrutura(c) {
-  const W = 720, X = 40, IW = 640;
-  const chip = (x, y, w, label, col) => `<rect x="${x}" y="${y}" width="${w}" height="32" rx="8" fill="${c.panel2}"/>${text(x+w/2, y+21, label, {mono:true, size:14, fill:col, anchor:'middle'})}`;
-  const tree = [
-    ['entrada/', 'gravação original · só leitura', c.pessoa],
-    ['roteiro/', 'briefing e objetivo', c.pessoa],
-    ['marca/ interface/', 'logo, fonte e telas', c.pessoa],
-    ['edicao/', 'cortes, cenas, aprovação', c.agente],
-    ['trabalho/', 'transcrição, quadros', c.auto],
-    ['versoes/', 'lotes de versões (opcional)', c.agente],
-    ['saida/', 'prévias e MP4 finais', c.auto],
-  ];
-  const PY = 574, rowH = 40;
-  const rows = tree.map(([dir, what, col], i) => {
-    const ry = PY + 92 + i*rowH;
-    return `${icon('pasta', X+22, ry-17, 20, col, 1.7)}${text(X+52, ry, dir, {mono:true, size:15, fill:c.fg})}${text(X+52, ry+17, what, {size:13.5, fill:c.muted})}`;
-  }).join('\n');
-  const PH = 92 + tree.length*rowH + 14, H = PY + PH + 96;
-  const side = (y, name, theme) => `<rect x="${X+430}" y="${y}" width="210" height="${(PH-20)/2}" rx="14" fill="${c.panel}" stroke="${c.line}"/>
-  ${icon('pasta', X+450, y+24, 24, c.muted, 1.7)}
-  ${text(X+484, y+43, name, {size:18, weight:700, fill:c.fg})}
-  ${text(X+450, y+80, theme, {size:15, fill:c.muted})}
-  ${text(X+450, y+104, 'mesma estrutura,', {size:15, fill:c.muted})}
-  ${text(X+450, y+126, 'arquivos próprios', {size:15, fill:c.muted})}`;
-  return svg(W, H, 'Instalação central e produções independentes',
-    'No topo, a instalação central do método em ~/projetos/cinema-9d-edicao, com bin/cinema-edicao, scripts, src com Remotion, skills, styles e docs; a skill fica vinculada em ~/.claude/skills e ~/.codex/skills. Ao lado, a biblioteca local opcional em ~/projetos/cinema-9d-biblioteca, com estilos e kits, fora do método e do Git; iniciar --kit copia para a produção só os arquivos listados no kit. O método opera cada produção pelo caminho absoluto. Cada produção fica em qualquer pasta, com entrada (gravação original, só leitura), roteiro, marca e interface, edicao, trabalho, versoes e saida. Produções B e C têm a mesma estrutura e arquivos próprios.',
-`<rect width="${W}" height="${H}" rx="24" fill="${c.bg}"/>
-<rect x="0.5" y="0.5" width="${W-1}" height="${H-1}" rx="23.5" fill="none" stroke="${c.line}"/>
-${logo(X, 40, 26, c.logo)}
-${text(X+46, 61, 'ESTRUTURA', {mono:true, size:14, fill:c.muted, ls:2})}
-${text(X, 110, 'Um método central,', {size:34, weight:800, fill:c.fg})}
-${text(X, 150, 'produções independentes', {size:34, weight:800, fill:c.fg})}
+// ---------- 03 ESTILOS ----------
+const phone = (x, y, v, k) => {
+  const w = 100, h = 178;
+  const inner = [
+    `<rect x="${x + 12}" y="${y + 22}" width="60" height="8" rx="4" fill="${C.ink}" opacity=".9"/><rect x="${x + 12}" y="${y + 46}" width="76" height="64" rx="8" fill="${C.lime}" opacity=".85"/>`,
+    `<circle cx="${x + 50}" cy="${y + 66}" r="30" fill="none" stroke="${C.lime}" stroke-width="3"/><rect x="${x + 22}" y="${y + 24}" width="56" height="8" rx="4" fill="${C.ink}" opacity=".9"/>`,
+    `<rect x="${x + 12}" y="${y + 24}" width="34" height="44" rx="6" fill="${C.muted}" opacity=".7"/><rect x="${x + 54}" y="${y + 24}" width="34" height="44" rx="6" fill="${C.lime}" opacity=".85"/><rect x="${x + 12}" y="${y + 78}" width="76" height="32" rx="6" fill="${C.ink}" opacity=".25"/>`,
+  ][k];
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="rgba(10,13,17,.88)" stroke="${C.muted}" stroke-opacity=".55"/>${inner}
+<rect x="${x + 12}" y="${y + 130}" width="76" height="20" rx="6" fill="#080b10" stroke="${C.lime}" stroke-opacity=".5"/><rect x="${x + 20}" y="${y + 138}" width="${[44, 52, 36][k]}" height="4" rx="2" fill="${C.ink}"/>
+<text class="cn" x="${x + w / 2}" y="${y + h + 26}" text-anchor="middle" fill="${C.ink}">${v}</text>`;
+};
+panel({file: 'estilos.svg', h: 560, image: 'estilos',
+  title: 'Estilos e várias versões',
+  desc: 'Estilos e lotes: um perfil de estilo versionado (minha-marca 1.0.0) guarda cores, fonte, legendas, cards e movimento, e é fixado por SHA-256 em cada produção. O comando produzir --versoes 3 cria um lote em que o agente dirige cada versão com diferenças reais. As versões v01, v02 e v03 aparecem lado a lado numa galeria local, e você escolhe; aprovar-lote e finalizar-lote só rodam com o seu OK. Ilustração de cartões de design sobre uma mesa escura.',
+  body: `${head('03 / ESTILOS E LOTES', 'Seu estilo, em várias versões.', 'Um perfil versionado guarda a identidade. O agente cria versões com diferenças reais.')}
+${card(64, 262, 360, 200)}
+<text class="cn" x="88" y="296" fill="${C.lime}">PERFIL DE ESTILO</text>
+<text x="88" y="332" style="font:700 20px ${MONO};fill:${C.ink}">minha-marca · 1.0.0</text>
+${[C.lime, '#101419', C.ink, C.muted].map((c, i) => `<circle cx="${104 + i * 44}" cy="372" r="16" fill="${c}" stroke="${C.line}"/>`).join('')}
+<text class="cd" x="88" y="418" style="font-size:14px">cores · fonte · legendas · cards · movimento</text>
+<text class="ms" x="88" y="444" fill="${C.lime}">FIXADO POR SHA-256 NA PRODUÇÃO</text>
+<line x1="428" y1="362" x2="466" y2="362" stroke="${C.muted}" stroke-width="1.5" marker-end="url(#a)"/>
+${card(470, 262, 330, 200)}
+<text class="cn" x="494" y="296" fill="${C.lime}">LOTE</text>
+<text x="494" y="332" style="font:700 20px ${MONO};fill:${C.ink}">produzir --versoes 3</text>
+<text class="cd" x="494" y="372">o agente dirige cada versão</text>
+<text class="cd" x="494" y="396">com diferenças editoriais reais</text>
+<text class="ms" x="494" y="444">PLANO → RENDER → REVISÃO</text>
+<line x1="804" y1="362" x2="842" y2="362" stroke="${C.muted}" stroke-width="1.5" marker-end="url(#a)"/>
+${phone(852, 262, 'v01', 0)}${phone(970, 262, 'v02', 1)}${phone(1088, 262, 'v03', 2)}
+<line x1="1196" y1="362" x2="1234" y2="362" stroke="${C.muted}" stroke-width="1.5" marker-end="url(#a)"/>
+${card(1240, 262, 296, 200, 'rgba(255,158,122,.45)')}
+<text class="cn" x="1264" y="296" fill="${C.peach}">GALERIA LOCAL</text>
+<text class="ct" x="1264" y="334" style="font-size:23px">você escolhe</text>
+<text class="cm" x="1264" y="374">aprovar-lote</text>
+<text class="cm" x="1264" y="400">finalizar-lote</text>
+<text class="ms" x="1264" y="444" fill="${C.peach}">SÓ COM O SEU OK</text>
+<text class="m" x="64" y="534">ESTILO / KIT / LOTE — TUDO VERSIONADO E NA SUA MÁQUINA</text>`});
 
-<rect x="${X}" y="186" width="${IW}" height="196" rx="16" fill="${c.panel}" stroke="${c.agente}" stroke-width="2"/>
-${text(X+24, 222, 'Instalação central do método', {size:21, weight:700, fill:c.fg})}
-${text(X+24, 248, '~/projetos/cinema-9d-edicao', {mono:true, size:15, fill:c.agente})}
-${chip(X+24, 266, 186, 'bin/cinema-edicao', c.fg)}${chip(X+220, 266, 96, 'scripts/', c.fg)}${chip(X+326, 266, 140, 'src/ Remotion', c.fg)}${chip(X+476, 266, 140, 'skills/', c.fg)}
-${chip(X+24, 308, 96, 'styles/', c.fg)}${chip(X+130, 308, 80, 'docs/', c.fg)}${chip(X+220, 308, 396, 'skill em ~/.claude e ~/.codex', c.muted)}
-${text(X+24, 364, 'Código, skill e estilos de exemplo. Sem mídia de clientes.', {size:15, fill:c.muted})}
+// ---------- 04 COMEÇAR ----------
+const go = [
+  ['Instale uma vez', 'git clone … && npm ci && npm run setup'],
+  ['Crie a produção', 'cinema-edicao iniciar "/pasta" --video gravacao.mov'],
+  ['Peça ao agente', '"Use a skill cinema-9d-edicao para /pasta"'],
+  ['Assista e aprove', 'aprovar --por "Seu nome"  →  final'],
+];
+panel({file: 'comecar.svg', h: 640, image: 'revisao', artX: 560, artW: 1040, fade: 'side',
+  title: 'Comece em quatro passos',
+  desc: 'Passo a passo: 1 instale uma vez (git clone, npm ci e npm run setup); 2 crie a produção com cinema-edicao iniciar e o caminho da gravação; 3 peça ao agente para usar a skill cinema-9d-edicao na pasta da produção; 4 assista à prévia, aprove com aprovar --por e exporte com final. Ilustração de um celular com legenda e um sinal de aprovação.',
+  body: `${head('04 / COMEÇAR', 'Comece em quatro passos.', 'Do clone ao primeiro vídeo, sempre com você no controle.')}
+${go.map(([t, c], i) => {
+    const y = 236 + i * 92;
+    return `${card(64, y, 820, 76)}
+<text x="96" y="${y + 52}" style="font:800 36px ${SANS};fill:${C.lime}">${i + 1}</text>
+<text class="ct" x="146" y="${y + 33}" style="font-size:22px">${t}</text>
+<text class="cm" x="146" y="${y + 58}" style="font-size:15px;fill:${C.muted}">${esc(c)}</text>`;
+  }).join('\n')}
+<text class="m" x="64" y="612">macOS · NODE 20+ · FFMPEG · WHISPER.CPP · CODEX OU CLAUDE CODE</text>`});
 
-<rect x="${X+240}" y="400" width="${IW-240}" height="118" rx="16" fill="none" stroke="${c.muted}" stroke-dasharray="6 6"/>
-${text(X+262, 432, 'Biblioteca local · opcional', {size:19, weight:700, fill:c.fg})}
-${text(X+262, 456, '~/projetos/cinema-9d-biblioteca', {mono:true, size:14, fill:c.muted})}
-${text(X+262, 480, 'Seus estilos e kits de marca.', {size:15, fill:c.muted})}
-${text(X+262, 502, 'Fica fora do método e do Git.', {size:15, fill:c.muted})}
+// ---------- PRÉVIA SOCIAL (1280×640, para Settings → Social preview) ----------
+panel({file: 'social.svg', w: 1280, h: 640, image: 'hero', artX: 0, artW: 1280, rx: 0,
+  title: 'Cinema 9D Edição', desc: 'Cinema 9D Edição: fala gravada vira vídeo vertical editado, com cortes, legendas e motion.',
+  body: `<g transform="translate(64 52) scale(.3)"><path d="${LOGO}" fill="${C.ink}"/></g>
+<text class="m" x="140" y="84" fill="${C.ink}">CINEMA 9D <tspan fill="${C.dim}">/</tspan> EDIÇÃO</text>
+<text class="eb" x="64" y="212" style="font-size:18px">CODEX · CLAUDE CODE · REMOTION</text>
+<text x="58" y="330" style="font:800 112px ${SANS};letter-spacing:-4px;fill:${C.ink}">CINEMA 9D</text>
+<text x="58" y="436" style="font:800 112px ${SANS};letter-spacing:-4px;fill:${C.lime}">EDIÇÃO</text>
+<text class="s" x="64" y="508" style="font-size:26px;fill:#d5dae0">Fala gravada vira vídeo vertical editado.</text>
+<text class="m" x="64" y="580">CORTES · LEGENDAS · MOTION · APROVAÇÃO</text>`});
 
-<path d="M${X+110} 382V${PY-6}" stroke="${c.agente}" stroke-width="2.5"/><path d="M${X+103} ${PY-14}l7 8 7-8" fill="none" stroke="${c.agente}" stroke-width="2.5"/>
-${text(X+124, 444, 'opera cada', {mono:true, size:13, fill:c.agente})}
-${text(X+124, 462, 'produção', {mono:true, size:13, fill:c.agente})}
-${text(X+124, 480, 'pelo caminho', {mono:true, size:13, fill:c.agente})}
-${text(X+124, 498, 'absoluto', {mono:true, size:13, fill:c.agente})}
-<path d="M${X+535} 518V${PY-6}" stroke="${c.muted}" stroke-width="2" stroke-dasharray="5 5"/><path d="M${X+528} ${PY-14}l7 8 7-8" fill="none" stroke="${c.muted}" stroke-width="2"/>
-${text(X+522, 550, 'iniciar --kit copia a lista do kit', {mono:true, size:13, fill:c.muted, anchor:'end'})}
-
-<rect x="${X}" y="${PY}" width="410" height="${PH}" rx="16" fill="${c.panel}" stroke="${c.pessoa}" stroke-width="2"/>
-${icon('pasta', X+22, PY+22, 26, c.pessoa, 1.8)}
-${text(X+58, PY+43, 'Produção A', {size:21, weight:700, fill:c.fg})}
-${text(X+22, PY+70, '/qualquer/pasta/novo-video', {mono:true, size:14, fill:c.pessoa})}
-${rows}
-${side(PY, 'Produção B', 'outro tema')}
-${side(PY + (PH-20)/2 + 20, 'Produção C', 'outra marca')}
-
-${text(X, H-50, 'Os originais não são alterados. Mídia e marca de cada cliente', {size:15, fill:c.muted})}
-${text(X, H-28, 'ficam na própria produção, nunca no método.', {size:15, fill:c.muted})}`);
-}
-
-for (const [name, c] of Object.entries(THEMES)) {
-  writeFileSync(path.join(OUT, `banner-${name}.svg`), banner(c));
-  writeFileSync(path.join(OUT, `fluxo-${name}.svg`), fluxo(c));
-  writeFileSync(path.join(OUT, `estrutura-${name}.svg`), estrutura(c));
-}
-console.log('SVGs gerados em', OUT);
+console.log('ok: hero, fluxo, estrutura, estilos, comecar, social');

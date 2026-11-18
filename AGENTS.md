@@ -28,3 +28,7 @@ Leia `docs/ESTILOS.md` ao aplicar perfis. O catálogo traz o perfil neutro `exem
 ## Orquestração 0.4.0
 
 Leia docs/ORQUESTRACAO.md e docs/CRIAR-ESTILO.md para lotes, estilos próprios e kits. N versões exigem direção real do agente e revisão das prévias; não invente aprovação humana. Não use subprocessos de agentes, APIs pagas ou uploads automaticamente. Preserve lotes anteriores. `npm run validar:orquestracao` usa somente fixtures sintéticas.
+
+## Geração de mídia com o Google (opcional)
+
+Leia docs/GERACAO-GOOGLE.md antes de usar os servidores MCP `genmedia-*` (Veo, Omni, Nano Banana, Gemini, Lyria, Chirp3, avtool). Toda geração é paga por uso: só chame depois do OK explícito do usuário no chat para aquela geração, e pergunte o formato se ele não foi dito. Baixe na pasta da produção (`geracao/brutos/`), registre com `bin/cinema-geracao` e use a cópia em `elementos/gerados/`. O bucket é só passagem. Os comandos locais não chamam provedores; o agente ativo, Claude ou Codex, é quem chama o servidor MCP.

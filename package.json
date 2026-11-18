@@ -21,7 +21,8 @@
     "setup": "node --import tsx scripts/setup.ts",
     "instalar:skill": "node --import tsx scripts/install-skill.ts",
     "validar:base": "node --import tsx scripts/validate-base.ts",
-    "validar:orquestracao": "node --import tsx scripts/validate-orchestration.ts"
+    "validar:orquestracao": "node --import tsx scripts/validate-orchestration.ts",
+    "geracao": "node --import tsx scripts/generation.ts"
   },
   "dependencies": {
     "remotion": "4.0.535",

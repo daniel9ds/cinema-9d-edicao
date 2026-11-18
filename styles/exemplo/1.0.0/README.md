@@ -50,4 +50,4 @@ As receitas são guias de direção com parâmetros; não geram cenas sozinhas. 
 
 ## Estudo
 
-`demo-estilo "/tmp/pasta-nova" --estilo exemplo` cria um estudo com vídeo, interface e marca sintéticos. Depois rode `previa`. Os quadros em `examples/exemplo-estilo-1.0.0-*` foram gerados assim.
+`demo-estilo "/tmp/pasta-nova" --estilo exemplo` cria um estudo com vídeo, interface e marca sintéticos. Depois rode `previa`. Os quadros e o MP4 ficam em `saida/previas/` da pasta de estudo.

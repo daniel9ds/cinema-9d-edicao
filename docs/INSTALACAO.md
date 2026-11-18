@@ -32,7 +32,7 @@ O método não contém credenciais ou mídia de clientes e não chama APIs pagas
 
 ## Evidências e limitações
 
-`validacao-local.json` e `examples/demonstracao-tecnica.mp4` são evidências históricas da versão 0.1.0, com mídia sintética; não certificam os novos componentes da 0.2.0.
+`validacao-local.json` é evidência histórica da versão 0.1.0, com mídia sintética; não certifica os componentes das versões seguintes. Para ver um resultado, rode `demo` e `previa`.
 
 A atualização 0.2.0 passou por checagem estática TypeScript e conferência de frontmatter. Testes e render de demonstração da atualização não foram executados. A avaliação visual, de sincronização e de áudio deve ocorrer na prévia da produção. Veja [melhorias incorporadas](aprendizados-incorporados.md).
 
