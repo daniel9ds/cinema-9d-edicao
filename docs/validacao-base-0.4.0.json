@@ -1,0 +1,141 @@
+{
+  "version": "0.4.0",
+  "at": "2026-10-28T05:48:48.341Z",
+  "result": "passed",
+  "scope": "Mídia e decisões sintéticas; não certifica anúncios reais nem aprova o estilo criativamente.",
+  "checks": [
+    {
+      "name": "TypeScript",
+      "status": "passed",
+      "seconds": 1.026,
+      "details": {
+        "stdout": "\n> cinema-9d-edicao@0.4.0 check\n> tsc --noEmit\n\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "Testes automatizados",
+      "status": "passed",
+      "seconds": 0.401,
+      "details": {
+        "tests": 26
+      }
+    },
+    {
+      "name": "Pré-requisitos locais",
+      "status": "passed",
+      "seconds": 0.016,
+      "details": {
+        "browser": true,
+        "whisperModel": true
+      }
+    },
+    {
+      "name": "Criação de fixtures e proteção do estilo",
+      "status": "passed",
+      "seconds": 1.456,
+      "details": {
+        "fontProvided": true,
+        "source": "synthetic"
+      }
+    },
+    {
+      "name": "Bloqueios sem prévia e aprovação",
+      "status": "passed",
+      "seconds": 0.452,
+      "details": {
+        "syntheticOnly": true
+      }
+    },
+    {
+      "name": "Render da base anterior e do estilo",
+      "status": "passed",
+      "seconds": 31.521,
+      "details": {
+        "previewDimensions": "540x960",
+        "fps": 30,
+        "audio": true
+      }
+    },
+    {
+      "name": "Quadros de composição e supressão visual de legendas",
+      "status": "passed",
+      "seconds": 6.137,
+      "details": {
+        "frames": 6,
+        "captionLuminance": {
+          "visible": 157.386,
+          "suppressed": 234.917
+        }
+      }
+    },
+    {
+      "name": "Prévia adulterada e mudanças invalidam aprovação",
+      "status": "passed",
+      "seconds": 0.624,
+      "details": {
+        "approvalIsFixture": true,
+        "productionApproval": false
+      }
+    },
+    {
+      "name": "Render nativo sintético e preservação das entradas",
+      "status": "passed",
+      "seconds": 20.81,
+      "details": {
+        "dimensions": "1080x1920",
+        "seconds": 16,
+        "sourceHashesPreserved": true
+      }
+    },
+    {
+      "name": "Revisão, mapa de gestos e montagem própria",
+      "status": "passed",
+      "seconds": 0.812,
+      "details": {
+        "gestureTimebase": "original",
+        "revision": "r02",
+        "customRendererProtected": true
+      }
+    },
+    {
+      "name": "Render a 60 fps com cortes descontínuos",
+      "status": "passed",
+      "seconds": 13.858,
+      "details": {
+        "fps": 60,
+        "seconds": 5,
+        "segments": 2,
+        "audio": true
+      }
+    },
+    {
+      "name": "Studio: sincronização, JSON inválido e travas curtas",
+      "status": "passed",
+      "seconds": 3.462,
+      "details": {
+        "lastValidPropsPreserved": true,
+        "concurrentEditAllowed": true,
+        "duplicateStudioBlocked": true,
+        "serverStopped": true
+      }
+    },
+    {
+      "name": "Transcrição local de fala sintética em CPU",
+      "status": "passed",
+      "seconds": 3.479,
+      "details": {
+        "language": "pt",
+        "words": 14,
+        "paidCalls": 0
+      }
+    }
+  ],
+  "artifacts": {
+    "legacyPreview": "legado/saida/previas/2026-10-28T05-48-53-574Z-previa.mp4",
+    "stylePreview": "estilo/saida/previas/2026-10-28T05-49-03-660Z-previa.mp4",
+    "frames": "quadros",
+    "nativeRender": "estilo/saida/final/2026-10-28T05-49-31-232Z-final.mp4",
+    "cut60Preview": "legado/saida/previas/2026-10-28T05-49-52-967Z-previa.mp4"
+  }
+}

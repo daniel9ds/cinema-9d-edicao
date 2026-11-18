@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1214" viewBox="0 0 720 1214" role="img" aria-labelledby="t d">
+<title id="t">Fluxo de produção do Cinema 9D Edição</title>
+<desc id="d">Sete etapas em sequência: 1 materiais e briefing (pessoa); 2 transcrição e proposta de cortes (automático, comando preparar); 3 direção e montagem (agente e automático); 4 prévia (automático, comando previa); 5 revisão humana (pessoa); 6 aprovação da revisão atual (pessoa, comando aprovar); 7 exportação final (automático, comando final). Uma seta tracejada leva os ajustes da revisão humana de volta à direção e montagem. Qualquer mudança invalida a aprovação anterior e exige nova prévia e nova aprovação.</desc>
+<rect width="720" height="1214" rx="24" fill="#101419"/>
+<rect x="0.5" y="0.5" width="719" height="1213" rx="23.5" fill="none" stroke="#2c3540"/>
+<path transform="translate(40 40) scale(0.1862)" fill="#f5f6f1" d="M113.8,91.44c-25.82,2.86-37.85,10.09-38.87,48.2h-15.53c-.72-.05-1.44-.08-2.17-.08H.23c0-47.1,12.83-39.38,57-39.38,7.63,0,13.03-3.53,16.19-10.61h-28.77c-12.28,0-22.78-4.43-31.52-13.25C4.39,67.47,0,56.94,0,44.66S4.39,21.85,13.14,13.1C21.88,4.35,32.38,0,44.66,0c27.63,0,55.24.05,82.86.05,15.82,0,29.29,6.58,40.45,17.75,11.16,11.16,16.75,24.64,16.75,40.45v25.12c0,15.82-5.58,29.33-16.75,40.49-9.5,9.5-20.59,13.88-32.41,15.78h-50.43c.23-32.87,13.83-37.56,28.04-38.01h.65s15.21,0,15.21,0c9.26-.51,16.31-3.59,16.31-18.26v-25.08c0-4.84-1.75-9.04-5.28-12.58-3.53-3.53-7.75-5.28-12.54-5.28h-13.71v.07s0,22.26,0,22.26c.04,9.31.1,18.47,0,28.68h0ZM80.5,52.14c-4.48-9.96-12.12-14.96-22.92-14.96h-17.81c-5.01,0-7.48,2.48-7.48,7.48s2.48,7.48,7.48,7.48h40.72Z"/>
+<text x="86" y="61" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#aab1ba" letter-spacing="2">FLUXO DE PRODUÇÃO</text>
+<text x="40" y="110" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="34" font-weight="800" fill="#f5f6f1">Da gravação ao MP4 final</text>
+<rect x="40" y="132" width="200" height="52" rx="12" fill="#1d242d"/>
+  <path transform="translate(54 144) scale(1.1666666666666667)" d="M12 8.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 1 0 0-7z M12 2.5v3 M12 18.5v3 M2.5 12h3 M18.5 12h3 M5.3 5.3l2.1 2.1 M16.6 16.6l2.1 2.1 M5.3 18.7l2.1-2.1 M16.6 7.4l2.1-2.1" fill="none" stroke="#7cc7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="92" y="155" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#7cc7ff">Automático</text>
+  <text x="92" y="175" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" fill="#aab1ba">scripts locais</text>
+<rect x="254" y="132" width="200" height="52" rx="12" fill="#1d242d"/>
+  <path transform="translate(268 144) scale(1.1666666666666667)" d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z M18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z" fill="none" stroke="#a4ff63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="306" y="155" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#a4ff63">Agente</text>
+  <text x="306" y="175" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" fill="#aab1ba">Codex ou Claude</text>
+<rect x="468" y="132" width="200" height="52" rx="12" fill="#1d242d"/>
+  <path transform="translate(482 144) scale(1.1666666666666667)" d="M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8z M4.5 20.5c1-4 4-6 7.5-6s6.5 2 7.5 6" fill="none" stroke="#ff9e7a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="520" y="155" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#ff9e7a">Pessoa</text>
+  <text x="520" y="175" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" fill="#aab1ba">você decide</text>
+<path d="M88 320V336" stroke="#2c3540" stroke-width="2.5"/><path d="M82 330l6 7 6-7" fill="none" stroke="#aab1ba" stroke-width="2"/><path d="M88 446V462" stroke="#2c3540" stroke-width="2.5"/><path d="M82 456l6 7 6-7" fill="none" stroke="#aab1ba" stroke-width="2"/><path d="M88 572V588" stroke="#2c3540" stroke-width="2.5"/><path d="M82 582l6 7 6-7" fill="none" stroke="#aab1ba" stroke-width="2"/><path d="M88 698V714" stroke="#2c3540" stroke-width="2.5"/><path d="M82 708l6 7 6-7" fill="none" stroke="#aab1ba" stroke-width="2"/><path d="M88 824V840" stroke="#2c3540" stroke-width="2.5"/><path d="M82 834l6 7 6-7" fill="none" stroke="#aab1ba" stroke-width="2"/><path d="M88 950V966" stroke="#2c3540" stroke-width="2.5"/><path d="M82 960l6 7 6-7" fill="none" stroke="#aab1ba" stroke-width="2"/>
+<g>
+  <rect x="40" y="214" width="556" height="104" rx="14" fill="#171d24" stroke="#2c3540"/>
+  <rect x="40" y="214" width="6" height="104" rx="3" fill="#ff9e7a"/>
+  <circle cx="88" cy="266" r="25" fill="none" stroke="#ff9e7a" stroke-width="2"/>
+  <path transform="translate(74 252) scale(1.1666666666666667)" d="M3 7h7l2 2h9v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z M7 13h10 M7 16h6" fill="none" stroke="#ff9e7a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130" y="246" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#ff9e7a" letter-spacing="1.5">01 · PESSOA</text>
+  
+  <text x="130" y="278" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#f5f6f1">Materiais e briefing</text>
+  <text x="130" y="303" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" fill="#aab1ba">Gravação, marca, telas e objetivo</text>
+</g>
+<g>
+  <rect x="40" y="340" width="556" height="104" rx="14" fill="#171d24" stroke="#2c3540"/>
+  <rect x="40" y="340" width="6" height="104" rx="3" fill="#7cc7ff"/>
+  <circle cx="88" cy="392" r="25" fill="none" stroke="#7cc7ff" stroke-width="2"/>
+  <path transform="translate(74 378) scale(1.1666666666666667)" d="M3 12h2 M7 8v8 M11 5v14 M15 9v6 M19 11v2 M21 12h0" fill="none" stroke="#7cc7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130" y="372" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#7cc7ff" letter-spacing="1.5">02 · AUTOMÁTICO</text>
+  <text x="576" y="372" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#aab1ba" text-anchor="end">preparar</text>
+  <text x="130" y="404" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#f5f6f1">Transcrição e proposta de cortes</text>
+  <text x="130" y="429" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" fill="#aab1ba">Whisper local, quadros e pausas</text>
+</g>
+<g>
+  <rect x="40" y="466" width="556" height="104" rx="14" fill="#171d24" stroke="#2c3540"/>
+  <rect x="40" y="466" width="6" height="104" rx="3" fill="#a4ff63"/>
+  <circle cx="88" cy="518" r="25" fill="none" stroke="#a4ff63" stroke-width="2"/>
+  <path transform="translate(74 504) scale(1.1666666666666667)" d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z M18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z" fill="none" stroke="#a4ff63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130" y="498" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#a4ff63" letter-spacing="1.5">03 · AGENTE + AUTOMÁTICO</text>
+  <text x="576" y="498" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#aab1ba" text-anchor="end">planejar</text>
+  <text x="130" y="530" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#f5f6f1">Direção e montagem</text>
+  <text x="130" y="555" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" fill="#aab1ba">Revisa cortes, cria cenas e motion</text>
+</g>
+<g>
+  <rect x="40" y="592" width="556" height="104" rx="14" fill="#171d24" stroke="#2c3540"/>
+  <rect x="40" y="592" width="6" height="104" rx="3" fill="#7cc7ff"/>
+  <circle cx="88" cy="644" r="25" fill="none" stroke="#7cc7ff" stroke-width="2"/>
+  <path transform="translate(74 630) scale(1.1666666666666667)" d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z M10.5 9.5v5l4-2.5z" fill="none" stroke="#7cc7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130" y="624" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#7cc7ff" letter-spacing="1.5">04 · AUTOMÁTICO</text>
+  <text x="576" y="624" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#aab1ba" text-anchor="end">previa</text>
+  <text x="130" y="656" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#f5f6f1">Prévia</text>
+  <text x="130" y="681" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" fill="#aab1ba">MP4 540×960 e quadros para conferir</text>
+</g>
+<g>
+  <rect x="40" y="718" width="556" height="104" rx="14" fill="#171d24" stroke="#2c3540"/>
+  <rect x="40" y="718" width="6" height="104" rx="3" fill="#ff9e7a"/>
+  <circle cx="88" cy="770" r="25" fill="none" stroke="#ff9e7a" stroke-width="2"/>
+  <path transform="translate(74 756) scale(1.1666666666666667)" d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z M12 9.2a2.8 2.8 0 1 0 0 5.6a2.8 2.8 0 1 0 0-5.6z" fill="none" stroke="#ff9e7a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130" y="750" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#ff9e7a" letter-spacing="1.5">05 · PESSOA</text>
+  
+  <text x="130" y="782" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#f5f6f1">Revisão humana</text>
+  <text x="130" y="807" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" fill="#aab1ba">Fala, leitura, ritmo e marca</text>
+</g>
+<g>
+  <rect x="40" y="844" width="556" height="104" rx="14" fill="#171d24" stroke="#2c3540"/>
+  <rect x="40" y="844" width="6" height="104" rx="3" fill="#ff9e7a"/>
+  <circle cx="88" cy="896" r="25" fill="none" stroke="#ff9e7a" stroke-width="2"/>
+  <path transform="translate(74 882) scale(1.1666666666666667)" d="M12 3l7.5 3v5.5c0 4.5-3.2 8-7.5 9.5-4.3-1.5-7.5-5-7.5-9.5V6z M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="#ff9e7a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130" y="876" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#ff9e7a" letter-spacing="1.5">06 · PESSOA</text>
+  <text x="576" y="876" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#aab1ba" text-anchor="end">aprovar</text>
+  <text x="130" y="908" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#f5f6f1">Aprovação da revisão atual</text>
+  <text x="130" y="933" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" fill="#aab1ba">Registro ligado ao MP4 conferido</text>
+</g>
+<g>
+  <rect x="40" y="970" width="556" height="104" rx="14" fill="#171d24" stroke="#2c3540"/>
+  <rect x="40" y="970" width="6" height="104" rx="3" fill="#7cc7ff"/>
+  <circle cx="88" cy="1022" r="25" fill="none" stroke="#7cc7ff" stroke-width="2"/>
+  <path transform="translate(74 1008) scale(1.1666666666666667)" d="M12 4v11 M7.5 10.5L12 15l4.5-4.5 M5 19h14" fill="none" stroke="#7cc7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130" y="1002" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#7cc7ff" letter-spacing="1.5">07 · AUTOMÁTICO</text>
+  <text x="576" y="1002" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#aab1ba" text-anchor="end">final</text>
+  <text x="130" y="1034" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#f5f6f1">Exportação final</text>
+  <text x="130" y="1059" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" fill="#aab1ba">MP4 1080×1920 e relatório técnico</text>
+</g>
+<path d="M596 770H646V518H606" fill="none" stroke="#ff9e7a" stroke-width="2.5" stroke-dasharray="7 6"/>
+  <path d="M614 511l-9 7 9 7" fill="none" stroke="#ff9e7a" stroke-width="2.5" stroke-linejoin="round"/>
+  <text x="670" y="644" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" fill="#ff9e7a" text-anchor="middle" letter-spacing="1.5" transform="rotate(-90 670 644)">AJUSTES VOLTAM À EDIÇÃO</text>
+<rect x="40" y="1100" width="632" height="86" rx="14" fill="none" stroke="#ff9e7a" stroke-dasharray="7 6"/>
+<path transform="translate(60 1128) scale(1.25)" d="M7 11V8a5 5 0 0 1 10 0v3 M5.5 11h13v9.5h-13z" fill="none" stroke="#ff9e7a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="106" y="1136" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#f5f6f1">Mudou corte, cena, legenda, marca ou mídia?</text>
+<text x="106" y="1162" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="16" fill="#aab1ba">A aprovação anterior deixa de valer: nova prévia, nova aprovação.</text>
+</svg>

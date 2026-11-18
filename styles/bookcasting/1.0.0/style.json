@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "bookcasting",
+  "version": "1.0.0",
+  "name": "BookCasting — editorial com conexões",
+  "reference": {"label": "Produção BookCasting com aprovação registrada em 17/10/2026", "revision": "R10", "approvalScope": "reference-production-only"},
+  "brand": {"name": "BookCasting", "primary": "#ca2d34", "background": "#ffffff", "foreground": "#161616", "muted": "#746965", "fontFamily": "Figtree"},
+  "tokens": {
+    "background": "soft-arcs",
+    "safeArea": {"left": 85, "right": 150, "top": 210, "bottom": 320},
+    "typography": {"headingSize": 78, "headingWeight": 650, "letteringWeight": 750, "letterSpacing": -2},
+    "motion": {"entrySeconds": 0.5, "exitSeconds": 0.32, "easing": [0.18, 0.85, 0.2, 1], "maxRotateY": 12, "driftPixels": 45},
+    "cards": {"radius": 30, "surface": "#ffffff", "border": "#e3d3cf", "shadow": "#502020", "padding": 20},
+    "captions": {"grouping": "phrase", "maxWords": 8, "maxCharacters": 42, "maxSeconds": 3, "gapSeconds": 0.35, "top": 1350, "fontSize": 43, "fontWeight": 600, "background": "#18191b", "foreground": "#ffffff", "activeMark": "underline"},
+    "logo": {"placement": "top-center", "width": 400, "top": 100, "sceneControlled": true},
+    "presenter": {"radius": 0, "supportLine": true}
+  },
+  "rules": [
+    {"id": "editorial", "scope": "style", "instruction": "Fundo branco, vermelho como acento e texto preto; manter espaço e hierarquia de leitura."},
+    {"id": "depth", "scope": "style", "instruction": "Volume por camadas, perspectiva e sombra discreta. Não chamar perspectiva CSS de geometria 3D ou rastreamento."},
+    {"id": "lettering", "scope": "style", "instruction": "Lettering com altura fixa e deslocamento lateral lento; evitar flutuação vertical e palavras isoladas piscando."},
+    {"id": "logo", "scope": "style", "instruction": "Logo controlado por cena, com revelação central e posição superior central; não aplicar logo no canto por padrão."},
+    {"id": "gesture", "scope": "per-production", "instruction": "Mapear gestos reais da nova gravação antes de fixar objetos às mãos. O estilo não contém rastreamento nem tempos do anúncio de referência."},
+    {"id": "readability", "scope": "style", "instruction": "Usar legendas em frases e suprimir apenas a informação já comunicada pelo lettering. Endereço e CTA devem ficar separados do rosto."},
+    {"id": "truth", "scope": "per-production", "instruction": "Telas, logo, fotos e dados vêm da produção. Marcar composições ilustrativas; não inventar interfaces ou métricas reais."},
+    {"id": "source", "scope": "per-production", "instruction": "Preservar voz, gestos e encerramento definido no briefing. Não aplicar color criativo, trocar figurino, gerar IA ou inserir música sem pedido específico."},
+    {"id": "quality", "scope": "per-production", "instruction": "Rever máscaras, boca, mãos, trocas de figurino e limite de crop dos arquivos efetivamente utilizados. A aprovação da referência não aprova vídeos futuros."}
+  ],
+  "recipes": [
+    {"id": "apresentador-lettering", "purpose": "Fala com lettering atrás do apresentador e altura fixa.", "parameters": ["fala", "tempo", "gesto", "enquadramento", "lettering", "mascara-se-necessaria"]},
+    {"id": "hub-conexoes", "purpose": "Card central estável com grupos e conexões progressivas.", "parameters": ["titulo", "grupos", "tempos-de-entrada", "presenca-do-apresentador"]},
+    {"id": "tela-produto", "purpose": "Tela real do produto em perspectiva com explicação sincronizada.", "parameters": ["captura-real", "legenda", "area-de-destaque", "enquadramento"]},
+    {"id": "elenco-cards", "purpose": "Cards de profissionais que se organizam sem cruzar o rosto.", "parameters": ["imagens-autorizadas", "rotulos", "trajetorias", "fala"]},
+    {"id": "revelacao-marca", "purpose": "Logo central que se fixa no topo e prepara a demonstração do produto.", "parameters": ["logo-real", "tempo-da-apresentacao", "duracao", "captura-real"]},
+    {"id": "encerramento", "purpose": "CTA legível e expressão final preservada, com fechamento opcional.", "parameters": ["dominio-conferido", "fala-final", "expressao", "duracao-do-fechamento"]}
+  ]
+}

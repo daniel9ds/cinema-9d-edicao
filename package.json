@@ -1,9 +1,15 @@
 {
   "name": "cinema-9d-edicao",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "Método local reutilizável para edição de fala, legendas e motion com Remotion.",
+  "license": "MIT",
+  "author": "Daniel da Costa Gomes Martins / 9D Studio",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daniel9ds/cinema-9d-edicao.git"
+  },
   "engines": {
     "node": ">=20"
   },
@@ -13,7 +19,9 @@
     "check": "tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts",
     "setup": "node --import tsx scripts/setup.ts",
-    "instalar:skill": "node --import tsx scripts/install-skill.ts"
+    "instalar:skill": "node --import tsx scripts/install-skill.ts",
+    "validar:base": "node --import tsx scripts/validate-base.ts",
+    "validar:orquestracao": "node --import tsx scripts/validate-orchestration.ts"
   },
   "dependencies": {
     "remotion": "4.0.535",

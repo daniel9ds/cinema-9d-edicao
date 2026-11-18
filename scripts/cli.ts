@@ -7,10 +7,22 @@ import {JobSchema, BrandSchema, CutsSchema, ScenesSchema, TranscriptSchema, Gest
 import {ROOT,readJson,writeJson,inside,exists,run,probe,hashFile,detectSilences,cutsFromSilences,remapWords,durationOf,draftScenes,whisperWords} from './core.ts';
 import {assertCentral,customProjects,revision,learn} from './projects.ts';
 import {openStudio} from './studio.ts';
+import {listStyles,applyStyle,applyProfile,loadStyle} from './styles.ts';
+import {createStyle,registerStyle,registerKit,applyKit} from './library.ts';
+import {orchestration} from './orchestration.ts';
 
 const HELP=`Cinema 9D Edição — método central, trabalhos em qualquer pasta
 
-cinema-edicao iniciar "/pasta/do/trabalho" [--nome "Nome"] [--tema "Tema"] [--video "/origem/take.mp4"]
+cinema-edicao iniciar "/pasta/do/trabalho" [--nome "Nome"] [--tema "Tema"] [--video "/origem/take.mp4"] [--estilo bookcasting]
+cinema-edicao estilos [--biblioteca "/biblioteca"]
+cinema-edicao produzir "/trabalho" --versoes 3 [--cpu] [--novo]
+cinema-edicao lote-status|aprovar-lote|finalizar-lote "/trabalho" [--por "Nome"]
+cinema-edicao estilo-criar "/rascunho/novo" --id minha-marca --nome "Nome" --marca "Marca" [--base bookcasting]
+cinema-edicao estilo-registrar "/rascunho" --estudo "/estudo" --por "Nome" [--biblioteca "/biblioteca"]
+cinema-edicao kit-registrar "/produção-origem" --manifesto "/lista.json" [--biblioteca "/biblioteca"]
+cinema-edicao kit "/nova-produção" --usar bookcasting [--biblioteca "/biblioteca"]
+cinema-edicao estilo "/pasta/do/trabalho" --usar bookcasting [--versao 1.0.0]
+cinema-edicao demo-estilo "/pasta/nova" [--estilo bookcasting]
 cinema-edicao preparar "/pasta/do/trabalho"   # analisar + transcrever localmente + propor cortes/cenas
 cinema-edicao analisar|transcrever|cortes|planejar "/pasta/do/trabalho"
 cinema-edicao validar|previa|studio|aprovar|final|status "/pasta/do/trabalho"
@@ -39,13 +51,14 @@ async function load(folder:string){
   return {dir,job:JobSchema.parse(await readJson(path.join(dir,'job.json')))};
 }
 async function source(dir:string,job:ReturnType<typeof JobSchema.parse>){return await inside(dir,job.video);}
-async function acquire(dir:string,action:()=>Promise<void>){
+export async function acquire(dir:string,action:()=>Promise<void>){
   const file=path.join(dir,'.cinema-edicao.lock');
   const lock=await fs.open(file,'wx').catch(()=>{throw Error('Já existe uma operação neste trabalho. Confira o processo e o arquivo .cinema-edicao.lock.');});
   await lock.writeFile(JSON.stringify({pid:process.pid,at:new Date().toISOString()}));
   try{await action();}finally{await lock.close();await fs.rm(file,{force:true});}
 }
-async function init(folder:string,flags:Record<string,string|boolean>){
+export async function init(folder:string,flags:Record<string,string|boolean>){
+  if([flags.estilo,flags.perfil,flags.kit].filter(Boolean).length>1)throw Error('Escolha somente --estilo, --perfil ou --kit na inicialização.');
   const dir=path.resolve(folder);await fs.mkdir(dir,{recursive:true});
   const target=await inside(dir,'job.json');
   if(await exists(target))throw Error('O trabalho já existe; os arquivos foram preservados.');
@@ -78,9 +91,12 @@ async function init(folder:string,flags:Record<string,string|boolean>){
   for(const file of ['AGENTS.md','CLAUDE.md'])if(!await exists(await inside(dir,file)))await fs.writeFile(await inside(dir,file),instructions);
   const learningFile=await inside(dir,'aprendizados/LEIA-ME.md');
   if(!await exists(learningFile))await fs.copyFile(path.join(ROOT,'docs/aprendizados-modelo.md'),learningFile);
+  if(flags.estilo)await applyStyle(dir,flags.estilo,flags.versao,flags.biblioteca);
+  if(typeof flags.perfil==='string')await applyProfile(dir,path.resolve(flags.perfil));
+  if(flags.kit)await applyKit(dir,flags.kit,flags.biblioteca);
   console.log(`Trabalho criado: ${dir}\nVídeo esperado: ${job.video}\nPreencha roteiro/briefing.md e marca/identidade.json.`);
 }
-async function analyze(dir:string,job:ReturnType<typeof JobSchema.parse>){
+export async function analyze(dir:string,job:ReturnType<typeof JobSchema.parse>){
   const input=await source(dir,job),media=await probe(input);
   if(!media.video||!media.audio)throw Error('O take deve conter uma faixa de vídeo e uma de áudio.');
   const sha=await hashFile(input);
@@ -94,7 +110,7 @@ async function analyze(dir:string,job:ReturnType<typeof JobSchema.parse>){
   console.log(`Analisado: ${media.duration.toFixed(2)}s, ${media.video.width}×${media.video.height}; 6 quadros em trabalho/frames/.`);
   return media;
 }
-async function transcribe(dir:string,job:ReturnType<typeof JobSchema.parse>,flags:Record<string,string|boolean>){
+export async function transcribe(dir:string,job:ReturnType<typeof JobSchema.parse>,flags:Record<string,string|boolean>){
   const input=await source(dir,job),sha=await hashFile(input),file=await inside(dir,'trabalho/transcricao-original.json');
   const previous=await exists(file)?TranscriptSchema.parse(await readJson(file)):null;
   if(previous?.sourceSha256===sha&&!flags.refazer){console.log('Transcrição local existente reutilizada.');return;}
@@ -117,7 +133,7 @@ async function transcribe(dir:string,job:ReturnType<typeof JobSchema.parse>,flag
   await fs.writeFile(await inside(dir,'trabalho/transcricao-original.txt'),words.map(w=>`[${w.start.toFixed(2)}–${w.end.toFixed(2)}] ${w.text}`).join('\n')+'\n');
   console.log(`${words.length} palavras transcritas. Revise nomes, números e sincronização.`);
 }
-async function proposeCuts(dir:string,job:ReturnType<typeof JobSchema.parse>,whole=false){
+export async function proposeCuts(dir:string,job:ReturnType<typeof JobSchema.parse>,whole=false){
   const input=await source(dir,job),media=await probe(input),file=await inside(dir,'edicao/cortes.json');
   if(await exists(file))throw Error('cortes.json já existe. Edite-o; para refazer, mova o arquivo para uma revisão.');
   let cuts:ReturnType<typeof CutsSchema.parse>;
@@ -138,7 +154,7 @@ async function mapped(dir:string){
   await writeJson(await inside(dir,'trabalho/transcricao-editada.json'),{...transcript,words},false);
   return {cuts,transcript,words,duration:durationOf(cuts)};
 }
-async function plan(dir:string){
+export async function plan(dir:string){
   const {words,duration}=await mapped(dir),file=await inside(dir,'edicao/cenas.json');
   if(!await exists(file))await writeJson(file,draftScenes(words,duration));
   const scenes=ScenesSchema.parse(await readJson(file));
@@ -158,7 +174,7 @@ async function plan(dir:string){
   }
   console.log('Plano em trabalho/plano-cenas.md; cenas editáveis em edicao/cenas.json.');
 }
-async function validate(dir:string,job:ReturnType<typeof JobSchema.parse>){
+export async function validate(dir:string,job:ReturnType<typeof JobSchema.parse>){
   const {cuts,transcript,words,duration}=await mapped(dir);
   const brand=BrandSchema.parse(await readJson(await inside(dir,'marca/identidade.json')));
   const scenes=ScenesSchema.parse(await readJson(await inside(dir,'edicao/cenas.json')));
@@ -179,9 +195,15 @@ async function validate(dir:string,job:ReturnType<typeof JobSchema.parse>){
     gestures=GestureMapSchema.parse(await readJson(gestureFile));
     if(gestures.sourceSha256!==sha||gestures.gestures.some(g=>g.end>media.duration))throw Error('Mapa de gestos incompatível com a gravação.');
   }
-  const props:RenderProps={job,brand,cuts,scenes:scenes.scenes,words,assetHashes:files};
+  const style=await loadStyle(dir,job);
+  if(style){
+    for(const [key,value] of Object.entries(style.brand))if(brand[key as keyof typeof brand]!==value)throw Error(`Identidade diverge do estilo em ${key}. Aplique o estilo correto ou crie um perfil para esta identidade.`);
+    if(!brand.fontFile)console.warn('Fonte do estilo não fornecida em marca/identidade.json; pode ocorrer fallback tipográfico.');
+    for(const s of scenes.scenes)for(const e of s.elements??[])if(Math.abs(e.rotateY)>style.tokens.motion.maxRotateY)throw Error(`Elemento ${e.id} ultrapassa a perspectiva do estilo.`);
+  }
+  const props:RenderProps={job,brand,cuts,scenes:scenes.scenes,words,assetHashes:files,style};
   const method:Record<string,string>={};
-  for(const file of ['src/index.ts','src/Root.tsx','src/Video.tsx','src/MotionElements.tsx','src/assets.ts','src/schema.ts','scripts/cli.ts','scripts/core.ts','scripts/projects.ts','scripts/studio.ts','package-lock.json'])method[file]=await hashFile(path.join(ROOT,file));
+  for(const file of ['src/index.ts','src/Root.tsx','src/Video.tsx','src/MotionElements.tsx','src/DimensionalIcon.tsx','src/styles.ts','src/style-context.ts','src/assets.ts','src/schema.ts','scripts/cli.ts','scripts/core.ts','scripts/styles.ts','scripts/projects.ts','scripts/studio.ts','scripts/orchestration.ts','scripts/library.ts','package-lock.json'])method[file]=await hashFile(path.join(ROOT,file));
   const fingerprint=createHash('sha256').update(JSON.stringify({props,files,method,gestures})).digest('hex');
   return {props,scenes,duration,files,fingerprint};
 }
@@ -203,9 +225,10 @@ async function staged(dir:string,job:ReturnType<typeof JobSchema.parse>){
   await writeJson(await inside(dir,'trabalho/render-props.json'),checked.props,false);
   return {...checked,publicDir};
 }
-async function render(dir:string,job:ReturnType<typeof JobSchema.parse>,final:boolean,stillsOnly=false){
+export async function render(dir:string,job:ReturnType<typeof JobSchema.parse>,final:boolean,stillsOnly=false){
   const state=await staged(dir,job);
   if(final){
+    if(state.props.style?.reference.approvalScope==='draft-style')throw Error('Estilo ainda é rascunho. Valide e registre antes da exportação final.');
     const approval=await readJson(await inside(dir,'edicao/aprovacao.json')).catch(()=>null);
     if(state.scenes.status!=='reviewed'||approval?.fingerprint!==state.fingerprint)throw Error('Edição sem aprovação atual. Revise a prévia e registre aprovar --por "Nome" após o OK do usuário.');
   }
@@ -231,9 +254,10 @@ async function render(dir:string,job:ReturnType<typeof JobSchema.parse>,final:bo
   const stats=await run('ffmpeg',['-hide_banner','-i',output,'-af','loudnorm=I=-16:TP=-1.5:LRA=9:print_format=json','-f','null','-'],{quiet:true});
   const meter=stats.stderr.match(/\{\s*"input_i"[\s\S]*?\}/)?.[0];
   await writeJson(output+'.json',{fingerprint:state.fingerprint,at:new Date().toISOString(),final,expectedSeconds:expected,media:qc,loudness:meter?JSON.parse(meter):null},false);
-  if(!final)await writeJson(await inside(dir,'trabalho/ultima-previa.json'),{fingerprint:state.fingerprint,revision:job.revision,output:path.relative(dir,output),at:new Date().toISOString()},false);
+  await writeJson(await inside(dir,final?'trabalho/ultima-final.json':'trabalho/ultima-previa.json'),{fingerprint:state.fingerprint,revision:job.revision,output:path.relative(dir,output),outputSha256:await hashFile(output),at:new Date().toISOString()},false);
   await fs.rm(raw,{force:true});
   console.log(`Exportado e verificado: ${output}`);
+  return output;
 }
 async function doctor(){
   const results:Record<string,unknown>={node:process.version,root:ROOT};let fail=false;
@@ -263,21 +287,76 @@ async function demo(folder:string){
   ]});
   console.log('Demonstração criada. O vídeo e as legendas são sintéticos; não validam a qualidade da transcrição.');
 }
+async function demoStyle(folder:string,flags:Record<string,string|boolean>){
+  const dir=path.resolve(folder);
+  if(await exists(dir)&&(await fs.readdir(dir)).length)throw Error('A demonstração precisa de uma pasta nova ou vazia.');
+  await init(dir,{nome:'Estudo sintético de estilo',...(flags.perfil?{perfil:flags.perfil}:{estilo:flags.estilo??'bookcasting',versao:flags.versao??'1.0.0'}),biblioteca:flags.biblioteca??''});
+  const input=await inside(dir,'entrada/video.mp4');
+  await run('ffmpeg',['-hide_banner','-loglevel','error','-n','-f','lavfi','-i','testsrc2=size=720x1280:rate=30:duration=16','-f','lavfi','-i','sine=frequency=220:sample_rate=48000:duration=16','-c:v','libx264','-preset','ultrafast','-pix_fmt','yuv420p','-c:a','aac','-shortest',input],{quiet:true});
+  // Assets de exemplo são vetores sintéticos, não capturas do produto nem mídia do cliente.
+  await fs.writeFile(await inside(dir,'interface/demo.svg'),'<svg xmlns="http://www.w3.org/2000/svg" width="390" height="780"><rect width="390" height="780" fill="white"/><text x="30" y="60" font-family="Arial" font-size="20" fill="#161616">INTERFACE SINTÉTICA</text><rect x="30" y="100" width="330" height="260" rx="20" fill="#f1e9e7"/><text x="55" y="240" font-family="Arial" font-size="24" fill="#ca2d34">ÁREA DE DEMONSTRAÇÃO</text><rect x="30" y="400" width="240" height="18" fill="#e6dfdc"/><rect x="30" y="440" width="300" height="18" fill="#e6dfdc"/><rect x="30" y="540" width="330" height="65" rx="18" fill="#ca2d34"/><text x="70" y="582" font-family="Arial" font-size="22" fill="white">AÇÃO ILUSTRATIVA</text></svg>');
+  await fs.writeFile(await inside(dir,'marca/demo.svg'),'<svg xmlns="http://www.w3.org/2000/svg" width="800" height="176"><rect width="800" height="176" rx="25" fill="#ca2d34"/><text x="40" y="110" font-family="Arial" font-size="65" fill="white">MARCA SINTÉTICA</text></svg>');
+  const brandFile=await inside(dir,'marca/identidade.json');await writeJson(brandFile,{...await readJson(brandFile),logo:'marca/demo.svg'});
+  const demoBrand=BrandSchema.parse(await readJson(brandFile));
+  for(const rel of ['interface/demo.svg','marca/demo.svg']){const file=await inside(dir,rel);await fs.writeFile(file,(await fs.readFile(file,'utf8')).replaceAll('#ca2d34',demoBrand.primary));}
+  const sha=await hashFile(input),{job}=await load(dir);
+  const words='Esta demonstração apresenta frases legíveis em uma composição de teste. Observe os enquadramentos e as conexões. Os elementos seguem posições definidas, sem rastreamento automático. Marca e interface são ilustrações para validar a base.'.split(' ').map((text,i)=>({text,start:i*.4,end:i*.4+.34})).filter(w=>w.end<=16);
+  await writeJson(await inside(dir,'trabalho/transcricao-original.json'),{version:1,language:'pt',model:'synthetic-not-transcribed',sourceSha256:sha,timing:'estimated',words});
+  await analyze(dir,job);await proposeCuts(dir,job,true);
+  await writeJson(await inside(dir,'edicao/cenas.json'),{version:1,status:'draft',scenes:[
+    {id:'lettering',start:0,end:3,type:'headline',title:'Lettering em altura fixa',branding:'hide',lettering:{text:'CONECTAR',top:250,size:150,outline:true,drift:35},viewport:{x:150,y:500,width:720,height:720,radius:0},framing:{x:50,y:45},zoom:1,zoomTo:1.1},
+    {id:'hub',start:3,end:7,type:'composition',title:'Card central e conexões',presenter:'hide',captionMode:'hide',elements:[
+      {id:'grupo-a',kind:'icon',icon:'people',title:'PROFISSIONAIS',x:90,y:500,width:320,height:230,rotateY:6},
+      {id:'grupo-b',kind:'icon',icon:'link',title:'AGÊNCIAS',x:590,y:500,width:320,height:230,rotateY:-6,enter:.25},
+      {id:'hub',kind:'icon',icon:'opportunity',title:'OPORTUNIDADES',x:300,y:950,width:420,height:240,enter:.5}
+    ],connections:[{from:'grupo-a',to:'hub',enter:.8},{from:'grupo-b',to:'hub',enter:1}]},
+    {id:'tela',start:7,end:11,type:'composition',title:'Tela ilustrativa e keyframes',branding:'reveal',presenter:'hide',captionSuppression:[{start:7,end:9}],elements:[
+      {id:'screen',kind:'screen',image:'interface/demo.svg',x:90,y:450,width:370,height:740,rotateY:-8,enter:1.9},
+      {id:'label',kind:'card',title:'Seu conteúdo',subtitle:'Posições são ajustadas por cena.',x:550,y:650,width:340,height:240,enter:2.2,keyframes:[{time:0,x:550,y:650},{time:3,x:590,y:680}]}
+    ]},
+    {id:'fecho',start:11,end:16,type:'headline',title:'Um estilo, novas histórias',subtitle:'Estudo técnico com mídia sintética.',branding:'show',viewport:{x:600,y:850,width:330,height:400,radius:24},framing:{x:70,y:50},zoom:1,zoomTo:1.15,sound:'elementos/sons/whoosh.wav',soundVolume:.1}
+  ]});
+  await plan(dir);
+  console.log('Estudo criado com mídia sintética. Forneça a fonte da marca para evitar fallback. Revise visualmente antes de registrar o estilo.');
+}
+export async function approvalReady(dir:string,job:ReturnType<typeof JobSchema.parse>){
+  const state=await validate(dir,job);
+  if(state.props.style?.reference.approvalScope==='draft-style')throw Error('Registre o estilo antes de aprovar a entrega.');
+  if(state.scenes.status!=='reviewed')throw Error('O agente precisa revisar o plano e marcar cenas.json como reviewed.');
+  const preview=await readJson(await inside(dir,'trabalho/ultima-previa.json')).catch(()=>null);
+  if(preview?.fingerprint!==state.fingerprint||!await exists(await inside(dir,preview.output)))throw Error('Gere e revise uma prévia MP4 da revisão atual.');
+  if(!preview.outputSha256||await hashFile(await inside(dir,preview.output))!==preview.outputSha256)throw Error('O MP4 da prévia mudou ou não tem hash verificado.');
+  return state;
+}
+export async function approve(dir:string,job:ReturnType<typeof JobSchema.parse>,by:unknown){
+  if(typeof by!=='string'||!by.trim())throw Error('Use --por "Nome" após OK explícito do usuário à prévia atual.');
+  const state=await approvalReady(dir,job);
+  await writeJson(await inside(dir,'edicao/aprovacao.json'),{fingerprint:state.fingerprint,by,at:new Date().toISOString()});
+  console.log('Aprovação registrada para esta revisão. Alterações invalidam a aprovação.');
+}
 async function main(){
   const {command,folder,flags}=parse(process.argv.slice(2));
   if(['help','ajuda','--help'].includes(command)){console.log(HELP);return;}
   if(command==='doctor'){await doctor();return;}
+  if(command==='estilos'){console.log(JSON.stringify(await listStyles(flags.biblioteca),null,2));return;}
   if(!folder)throw Error('Informe a pasta do trabalho. Use ajuda para ver exemplos.');
+  if(command==='estilo-criar'){await createStyle(folder,flags);return;}
+  if(command==='estilo-registrar'){await registerStyle(folder,flags);return;}
+  if(command==='kit-registrar'){if(typeof flags.manifesto!=='string')throw Error('Informe --manifesto com a lista explícita de assets.');await registerKit(folder,flags.manifesto,flags.biblioteca);return;}
+  if(['produzir','lote-status','aprovar-lote','finalizar-lote'].includes(command)){await orchestration(command,folder,flags);return;}
   if(command==='iniciar'){await init(folder,flags);return;}
   if(command==='demo'){await demo(folder);return;}
+  if(command==='demo-estilo'){await demoStyle(folder,flags);return;}
   const {dir,job}=await load(folder);
   if(command==='studio'){
     await assertCentral(dir,job);
-    await openStudio(dir,String(flags.porta??3000),action=>acquire(dir,action),async()=>{const current=await load(dir);await assertCentral(dir,current.job);return staged(dir,current.job);});return;
+    await openStudio(dir,String(flags.porta??3000),action=>acquire(dir,action),async()=>{const current=await load(dir);await assertCentral(dir,current.job);return staged(dir,current.job);},!!flags['no-open']);return;
   }
   await acquire(dir,async()=>{
     if(!['status','aprender'].includes(command))await assertCentral(dir,job);
     if(command==='analisar')await analyze(dir,job);
+    else if(command==='estilo'){if(typeof flags.perfil==='string')await applyProfile(dir,path.resolve(flags.perfil));else await applyStyle(dir,flags.usar,flags.versao,flags.biblioteca);}
+    else if(command==='kit')await applyKit(dir,flags.usar,flags.biblioteca);
     else if(command==='aprender')await learn(dir,flags);
     else if(command==='revisao')await revision(dir,job,flags.nome,flags.nota);
     else if(command==='sincronizar'){const state=await staged(dir,job);console.log(`Dados sincronizados: ${job.name} / ${job.revision} / ${state.fingerprint.slice(0,12)}`);}
@@ -296,15 +375,7 @@ async function main(){
     }
     else if(command==='validar'){const state=await validate(dir,job);console.log(`Estrutura válida: ${state.duration.toFixed(2)}s; ${state.props.words.length} palavras; ${state.props.scenes.length} cenas; ${state.fingerprint.slice(0,12)}.`);}
     else if(command==='previa'||command==='final')await render(dir,job,command==='final',!!flags.quadros);
-    else if(command==='aprovar'){
-      if(typeof flags.por!=='string')throw Error('Use --por "Nome" após o usuário aprovar a prévia.');
-      const state=await validate(dir,job);
-      if(state.scenes.status!=='reviewed')throw Error('O agente precisa revisar o plano e mudar cenas.json status para reviewed antes da aprovação.');
-      const preview=await readJson(await inside(dir,'trabalho/ultima-previa.json')).catch(()=>null);
-      if(preview?.fingerprint!==state.fingerprint||!await exists(await inside(dir,preview.output)))throw Error('Gere e revise uma prévia MP4 da revisão atual antes de registrar aprovação.');
-      await writeJson(await inside(dir,'edicao/aprovacao.json'),{fingerprint:state.fingerprint,by:flags.por,at:new Date().toISOString()});
-      console.log('Aprovação registrada para esta revisão. Alterações invalidam a aprovação.');
-    }
+    else if(command==='aprovar')await approve(dir,job,flags.por);
     else if(command==='status'){
       console.log(`Trabalho: ${job.name}\nTema: ${job.theme??'briefing'}\nRevisão da base: ${job.revision}`);
       const custom=await customProjects(dir);

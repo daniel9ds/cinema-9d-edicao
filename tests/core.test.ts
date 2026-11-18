@@ -19,9 +19,11 @@ test('tempos das palavras seguem os cortes e excluem o trecho removido',()=>{
 });
 test('quantização cumulativa evita deriva entre muitos cortes',()=>{
   const cuts=CutsSchema.parse({version:1,sourceDuration:100,segments:Array.from({length:80},(_,i)=>({start:i,end:i+.317}))});
-  const segments=frameSegments(cuts,30);
-  for(let i=1;i<segments.length;i++)assert.equal(segments[i].from,segments[i-1].from+segments[i-1].duration);
-  assert.equal(segments.at(-1)!.from+segments.at(-1)!.duration,Math.round(durationOf(cuts)*30));
+  for(const fps of [30,60]){
+    const segments=frameSegments(cuts,fps);
+    for(let i=1;i<segments.length;i++)assert.equal(segments[i].from,segments[i-1].from+segments[i-1].duration);
+    assert.equal(segments.at(-1)!.from+segments.at(-1)!.duration,Math.round(durationOf(cuts)*fps));
+  }
 });
 test('tokens parciais do Whisper se juntam em palavras, sem inventar tempos',()=>{
   const words=whisperWords({transcription:[{tokens:[

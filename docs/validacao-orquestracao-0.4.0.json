@@ -1,0 +1,93 @@
+{
+  "version": "0.4.0",
+  "at": "2026-10-28T05:51:26.296Z",
+  "root": "/private/tmp/cinema04-validation-6qZPvP",
+  "results": [
+    {
+      "check": "preparação local cria contrato, sem simular direção criativa",
+      "passed": true
+    },
+    {
+      "check": "quantidade incompatível bloqueada antes de materializar",
+      "passed": true
+    },
+    {
+      "check": "duas versões independentes renderizadas, com áudio e dimensões corretas",
+      "passed": true
+    },
+    {
+      "check": "retomada reutiliza prévias sem duplicar render",
+      "passed": true
+    },
+    {
+      "check": "aprovação bloqueada sem revisão criativa atual",
+      "passed": true
+    },
+    {
+      "check": "gates completos e finais nativos; retomada recupera final concluído antes do registro",
+      "passed": true
+    },
+    {
+      "check": "alteração de MP4 detectada na aprovação e no status",
+      "passed": true
+    },
+    {
+      "check": "direção e quantidade congeladas após montagem",
+      "passed": true
+    },
+    {
+      "check": "novo lote preserva anteriores e originais; briefing invalida lote",
+      "passed": true
+    },
+    {
+      "check": "rascunho permite estudo mas bloqueia final",
+      "passed": true
+    },
+    {
+      "check": "outro usuário cria, estuda, registra e reutiliza estilo próprio imutável",
+      "passed": true
+    }
+  ],
+  "syntheticOnly": true,
+  "providerCalls": 0,
+  "clientMediaModified": false,
+  "firstBatch": "/private/tmp/cinema04-validation-6qZPvP/producao/orquestracao/lotes/2e247558-9954-4a35-8538-8e5889eff0bf",
+  "firstBatchState": {
+    "version": 1,
+    "batch": "2e247558-9954-4a35-8538-8e5889eff0bf",
+    "requestedVariants": 2,
+    "inputFingerprint": "29b74523d79f3e4eb8e1e398cfa8022e279b39a5dff0b8d2af50b35304ef1fa7",
+    "phase": "finalizado",
+    "planSha256": "a82209e76c63fdc64824eaa0d6c9fd57f372b42b0fd33ba0dab13ed6be346e01",
+    "variants": [
+      {
+        "id": "v001",
+        "label": "Composição A",
+        "strategy": "Texto com apresentador na base, voz original.",
+        "folder": "versoes/2e247558-9954-4a35-8538-8e5889eff0bf/v001",
+        "fingerprint": "55d3d951006c57e9504118e881bc10488e7e72395a8c1b7c66803f23f218a88b",
+        "preview": "versoes/2e247558-9954-4a35-8538-8e5889eff0bf/v001/saida/previas/2026-10-28T05-51-01-221Z-previa.mp4",
+        "previewSha256": "d4c5d8c6933703cfceafae186fc4b38b9a87e396bfc851fc607cac594a00a397",
+        "final": "versoes/2e247558-9954-4a35-8538-8e5889eff0bf/v001/saida/final/2026-10-28T05-51-11-852Z-final.mp4",
+        "finalSha256": "39e3d64421de6bace75e51dc2fb57198182c22a9e63b1413b565dbf7d9dce028"
+      },
+      {
+        "id": "v002",
+        "label": "Composição B",
+        "strategy": "Enquadramento fechado e lettering; mesma voz original.",
+        "folder": "versoes/2e247558-9954-4a35-8538-8e5889eff0bf/v002",
+        "fingerprint": "a8f17be8c6c0c343c17c88e1a2610399430519933aba2060d2e0dd087b05d216",
+        "preview": "versoes/2e247558-9954-4a35-8538-8e5889eff0bf/v002/saida/previas/2026-10-28T05-51-06-269Z-previa.mp4",
+        "previewSha256": "c56c56a54042bba3eeb79aa2daea374f173ce5f453b68570be1c99e415690d34",
+        "final": "versoes/2e247558-9954-4a35-8538-8e5889eff0bf/v002/saida/final/2026-10-28T05-51-16-678Z-final.mp4",
+        "finalSha256": "5ad372ad63093974113b2e74306f93b5d98bc29fd8d3f6387e8e64ebec3541b3"
+      }
+    ],
+    "createdAt": "2026-10-28T05:51:00.233Z",
+    "approval": {
+      "by": "CHECK AUTOMATIZADO — APENAS MÍDIA SINTÉTICA",
+      "reviewSha256": "a73e1c8d6d5be9aaed6d28e4b1c338583a6a6cf3427d89a741f301b3076e3dc9",
+      "at": "2026-10-28T05:51:11.103Z"
+    }
+  }
+}

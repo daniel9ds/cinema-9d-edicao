@@ -22,3 +22,35 @@ trabalhos/
 /aprendizados/
 /revisoes/
 /.entrega/
+
+/orquestracao/
+/versoes/
+/biblioteca/
+
+# Credenciais e configurações locais (nunca versionar)
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+.npmrc
+.netrc
+credentials*.json
+secrets*.json
+*.secret
+.claude/settings.local.json
+.vscode/
+.idea/
+
+# Travas, temporários e caches de render
+.cinema-edicao.lock
+.cinema-studio.lock
+*.tmp
+*.part
+tmp/
+out/
+Thumbs.db
+
+# Arquivos de produção na raiz do método
+/job.json

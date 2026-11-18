@@ -1,6 +1,6 @@
 ---
 name: cinema-9d-edicao
-description: Edita gravações de fala com o método Cinema 9D, usando pastas independentes, transcrição local, cortes rastreáveis, legendas e motion no Remotion. Use para produzir ou revisar uma edição com este método.
+description: Edita gravações de fala com o método Cinema 9D, usando pastas independentes, transcrição local, cortes rastreáveis, legendas e motion no Remotion. Use para produzir ou revisar uma edição, orquestrar várias versões e criar estilos/kits reutilizáveis com este método.
 ---
 
 # Cinema 9D Edição
@@ -9,10 +9,21 @@ Localize a instalação central pela pasta real desta skill: ela fica em `skills
 O usuário escolhe a pasta de cada produção. Use o executável `bin/cinema-edicao` desse método com o caminho absoluto do trabalho.
 Leia [o método e os formatos](../../docs/metodo.md) antes de criar ou modificar cortes/cenas.
 Para iniciar outra produção/tema ou consolidar aprendizados, leia [novos projetos](../../docs/novos-projetos.md).
+Para reutilizar um perfil consolidado, leia [estilos](../../docs/ESTILOS.md) e o README da versão escolhida no catálogo `styles/`. O perfil BookCasting deriva da referência R10; não carrega os assets ou a aprovação de vídeos futuros.
+
+
+## Orquestração e reutilização (0.4.0)
+
+Para várias versões, leia [orquestração](../../docs/ORQUESTRACAO.md). Use `iniciar --kit <id>` para nova fala com materiais reutilizáveis; `--estilo <id>` aplica só o perfil. Para um estilo novo, siga [criar estilo](../../docs/CRIAR-ESTILO.md): rascunho, estudo, revisão do usuário, registro e kit com lista explícita de materiais. A biblioteca local fica fora do método. Estilos/kit não carregam a aprovação de futuras produções. Aprendizados propostos não são incorporados automaticamente.
+
+O agente ativo deve conduzir o fluxo, sem simplesmente devolver ao usuário o caminho do pedido. Rode `produzir --versoes N --cpu`; leia `orquestracao/lotes/<lote>/pedido-do-agente.md` e preencha `plano.json` usando os contratos de `scripts/orchestration.ts`. Analise realmente a fala, os frames e os cortes antes de compor N alternativas com diferenças explicadas. Rode produzir novamente, confira as prévias, registre `revisao-criativa.json` com evidências temporais reais e rode produzir para validar. O script não cria direção semântica nem invoca outros modelos/agentes. Se uma etapa estiver pendente, complete o trabalho autorizado em vez de anunciar finalização. Se faltar informação essencial ou outro take, explique o limite.
+
+Planos ficam congelados após iniciar a montagem; para alterar cenas ou quantidade, preserve o lote e use `--novo`. Versões têm diretórios próprios. Uma montagem própria `edicao/remotion-*` precisa de seu workflow e não é sobrescrita pelo lote central. Não contorne fingerprints ou registros. Mostre a galeria local, espere o OK explícito do usuário e só então use `aprovar-lote --por` e `finalizar-lote`. Nunca preencha aprovação humana com a revisão técnica/criativa do agente.
 
 ## Entrada e análise
 
 Se a produção ainda não existe, execute `iniciar "/pasta"` (opcional `--tema "Tema"` e `--video "/origem/take.mp4"`). Leia `job.json`, as instruções/documento de continuidade atuais, `roteiro/briefing.md`, `marca/identidade.json`, `interface/` e as referências relevantes. Tema e identidade pertencem à produção. Se houver `job.rendering` ou montagem `edicao/remotion-*`, use seus scripts: a configuração da raiz pode ser histórica. Não reinicie por cima de uma composição própria.
+Com perfil, use `--estilo bookcasting --versao 1.0.0` ou o comando `estilo --usar`. O snapshot `marca/estilo.json` é fixado por hash no trabalho. Não altere seu SHA para aceitar uma modificação; aplique uma versão apropriada após preservar a revisão. Logo, fonte, mídia e telas permanecem na produção. Recalcule os tempos para a nova fala; receitas de estilo são guias, não cenas automáticas.
 O vídeo fica em `entrada/`, ou em outro caminho relativo configurado no `job.json`. Preserve o original.
 Execute `preparar "/pasta"`, leia a transcrição palavra a palavra e inspecione `trabalho/frames/`. Extraia mais quadros quando precisar conferir um gesto, corte ou referência. A amostragem de seis quadros não substitui a análise dos momentos relevantes.
 O Whisper small multilíngue roda na máquina; revise nomes, números e palavras omitidas. Se o áudio ou a transcrição não permitirem uma decisão, indique o trecho incerto em vez de inventar uma fala.
@@ -25,6 +36,7 @@ Transforme o rascunho em cenas com função: uma ideia por cena, visual que expl
 O gancho deve ser legível no primeiro quadro. Preserve margens para a interface do canal; ajuste a posição do rosto em `job.json`. O método faz recorte com foco fixo configurável, sem rastreamento automático de rosto.
 Use `framing`, `viewport` e `zoomTo` por cena quando necessário. `presenter: hide` oculta a imagem e mantém a voz. Observe os gestos antes de compor: `gestos` cria `edicao/gestos.json` com tempos originais e `planejar` remapeia os intervalos. Keyframes e máscaras exigem trabalho explícito; não prometa rastreamento ou recorte automático.
 Use `captionMode`/`captionSuppression` para evitar legenda redundante com lettering. Uma palavra de destaque não substitui a informação de toda a frase. Cards, telas e conexões podem usar `elements`/`connections`; consulte os formatos, sem criar campos ignorados pelo renderizador.
+No perfil BookCasting, `lettering` mantém a altura e permite contorno/drift lateral; `branding` controla ocultação, revelação central e fixação superior do logo. `kind: icon` fornece ícones em camadas. O estilo não cria máscaras ou rastreamento. Confira fonte fornecida, área segura e leitura das legendas em frase.
 Use marca e arquivos reais fornecidos. Métricas e barras exigem valores com fonte. Marque ilustrações/simulações. Não invente prints, números ou resultados.
 Sons são opcionais e devem vir de arquivos autorizados. Música só quando pedida; mantenha voz clara. Um som por movimento é uma referência de estilo, não obrigação para todas as edições.
 

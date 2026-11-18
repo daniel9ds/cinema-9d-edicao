@@ -2,6 +2,8 @@
 
 Cada produção tem seu tema, gravação, marca, telas e referências. Os comandos abaixo usam a instalação convencional em `~/projetos/cinema-9d-edicao`; se você clonou em outro lugar, substitua esse prefixo. A instalação central guarda código e procedimentos reutilizáveis; não guarda mídia de clientes. Você pode escolher qualquer pasta local e abrir o agente diretamente nela.
 
+Na base 0.3.0, produções BookCasting podem acrescentar `--estilo bookcasting --versao 1.0.0` ao comando `iniciar`. Veja [perfis de estilo](ESTILOS.md). Isso fixa a linguagem visual; o vídeo, as telas, os gestos e os tempos são novos em cada produção.
+
 ## 1. Criar a pasta
 
 Exemplo (troque o caminho, nome e tema):
@@ -82,3 +84,7 @@ Para consolidar, abra **a pasta central** `~/projetos/cinema-9d-edicao` e peça:
 > Analise os aprendizados da produção em /caminho/Meu novo vídeo. Confira as evidências e proponha o que pode ser reutilizado. Incorpore ao método as melhorias autorizadas de código, componentes e instruções, preservando compatibilidade. Mantenha preferências de tema na produção. Não copie mídia, marca, dados pessoais ou prompts privados do cliente para o método. Registre o que mudou e suas limitações.
 
 A melhoria ocorre por procedimentos, componentes e padrões fundamentados na experiência. Uma preferência de um vídeo não deve virar regra universal. Gerações pagas, publicação e aprovação final continuam decisões específicas de cada produção.
+
+## Estilos, kits e lotes (0.4.0)
+
+Para nova fala da mesma marca, use `iniciar --kit <id>` e peça ao agente `produzir --versoes N`. A direção adapta as cenas à nova gravação. Leia [orquestração](ORQUESTRACAO.md) e [estilos próprios](CRIAR-ESTILO.md). As propostas de aprendizados só viram regras depois de revisão e incorporação explícitas.

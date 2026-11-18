@@ -4,7 +4,7 @@
 
 - Node.js 20 ou superior e npm.
 - FFmpeg/FFprobe e Whisper.cpp (`whisper-cli`) disponíveis no PATH.
-- Git e acesso ao repositório GitHub.
+- Git.
 - Espaço para dependências, navegador, modelo Whisper e cache de render.
 
 No macOS com Homebrew: `brew install node ffmpeg whisper-cpp`.
@@ -22,7 +22,7 @@ npm run instalar:skill
 npm run doctor
 ```
 
-O destino pode ser outro: o executável resolve sua raiz. Ajuste os caminhos dos exemplos para a sua instalação. Repositórios privados exigem sua credencial normal de GitHub; não copie credenciais para o método ou para produções.
+O destino pode ser outro: o executável resolve sua raiz. Ajuste os caminhos dos exemplos para a sua instalação. O repositório é público e não exige credencial para clonar. Não copie tokens ou senhas para o método ou para produções.
 
 `setup` baixa o modelo Whisper small multilíngue (~466 MiB), prepara um navegador compatível do Remotion e gera três sons sintéticos. Esses downloads não são chamadas de geração paga. Configurações específicas da máquina ficam em `.runtime/`, ignorada pelo Git. Não copie `.runtime/machine.json` de outra máquina: execute setup nela.
 
@@ -37,3 +37,8 @@ O método não contém credenciais ou mídia de clientes e não chama APIs pagas
 A atualização 0.2.0 passou por checagem estática TypeScript e conferência de frontmatter. Testes e render de demonstração da atualização não foram executados. A avaliação visual, de sincronização e de áudio deve ocorrer na prévia da produção. Veja [melhorias incorporadas](aprendizados-incorporados.md).
 
 Para uma verificação solicitada do método, estão disponíveis `npm run check`, `npm test` e o comando `demo` seguido de `previa`, usando uma pasta temporária e mídia sintética. Não confunda uma checagem técnica com aprovação criativa.
+
+
+## Consolidação 0.3.0
+
+O perfil BookCasting 1.0.0, seus comandos e a validação da base estão descritos em [ESTILOS.md](ESTILOS.md). A fonte é fornecida por cada produção; não é redistribuída no pacote. Consulte `validacao-base-0.3.0.json` para os resultados da rotina desta versão e o relatório visual associado. A evidência histórica acima continua identificada como 0.1.0/0.2.0.

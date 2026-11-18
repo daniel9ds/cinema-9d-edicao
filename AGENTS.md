@@ -18,3 +18,13 @@ Para modificar o método: `npm run check` e `npm test`. Verifique as mudanças d
 Use `docs/novos-projetos.md` para novos temas e registros de uso. Tema, marca e preferências ficam na produção. Antes de editar, confira a revisão e se existe uma montagem própria: a raiz de uma produção antiga pode ser apenas histórica. Comandos da base não substituem scripts de composições próprias.
 
 Ao atualizar este método, mantenha compatibilidade dos campos antigos e registre mudanças/limitações em `docs/aprendizados-incorporados.md`. Incorpore apenas aprendizados fundamentados que possam ser reutilizados; não copie materiais privados. Registros locais de aprendizado são propostas, não regras globais nem autorização para usar serviços externos. O Studio sincroniza dados, não decide ou aprova a edição.
+
+## Perfis de estilo (0.3.0)
+
+Leia `docs/ESTILOS.md` ao aplicar perfis. O perfil BookCasting 1.0.0 consolida a linguagem da R10, sem copiar seus assets ou tempos. A aprovação da referência não aprova o pacote visual novo nem outras produções. Snapshots por produção são fixados por hash; alterações pedem aplicação explícita e nova prévia. Orquestração local e variantes estão documentadas em docs/ORQUESTRACAO.md (0.4.0); o agente ativo faz direção e revisão, os scripts fazem montagem e validação.
+
+`npm run validar:base` verifica fixtures locais com renders e Studio temporário. Aprovações nessa rotina são marcadas como testes sintéticos, nunca aprovação do usuário. Preserve evidência técnica separada da revisão estética.
+
+## Orquestração 0.4.0
+
+Leia docs/ORQUESTRACAO.md e docs/CRIAR-ESTILO.md para lotes, estilos próprios e kits. N versões exigem direção real do agente e revisão das prévias; não invente aprovação humana. Não use subprocessos de agentes, APIs pagas ou uploads automaticamente. Preserve lotes anteriores. `npm run validar:orquestracao` usa somente fixtures sintéticas.
