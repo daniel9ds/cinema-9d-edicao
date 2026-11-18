@@ -251,6 +251,7 @@ Evidências técnicas: [validação 0.4.0](docs/VALIDACAO-0.4.0.md). Para atuali
 | [docs/ESTILOS.md](docs/ESTILOS.md) | Perfis de estilo e snapshots |
 | [docs/CRIAR-ESTILO.md](docs/CRIAR-ESTILO.md) | Criar estilo e kit próprios |
 | [docs/GERACAO-GOOGLE.md](docs/GERACAO-GOOGLE.md) | Mídia gerada com os servidores MCP `genmedia-*`: aprovação, pastas, manifesto e Remotion |
+| [docs/SONOPLASTIA.md](docs/SONOPLASTIA.md) | Sonoplastia opcional: mapa de sons, Openverse, Earshot, licenças e créditos |
 | [docs/ANAMORFICO-BLENDER.md](docs/ANAMORFICO-BLENDER.md) | Guia experimental, fora da edição de fala: painel anamórfico / LED 3D com Blender |
 | [docs/ATUALIZACAO.md](docs/ATUALIZACAO.md) | Atualizar a instalação com segurança |
 | [docs/aprendizados-incorporados.md](docs/aprendizados-incorporados.md) | O que cada versão incorporou e seus limites |
