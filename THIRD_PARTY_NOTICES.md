@@ -1,9 +1,22 @@
-# Créditos de terceiros
+# Licença, créditos e componentes de terceiros
 
-- **Bolo de Camadas**, pcauhi — https://github.com/pcauhi/bolo-de-camadas, commit `f8907602475045b9e45825a09645da18a700fd29`, licença MIT. Cópia integral da skill e licença em `vendor/skills/bolo-de-camadas`. Referência de direção em cinco camadas; os scripts locais deste projeto são uma implementação adicional.
-- **Remotion** — https://www.remotion.dev/license. Licença própria; não redistribuímos o framework como código nosso.
-- **Whisper.cpp / ggml** — https://github.com/ggml-org/whisper.cpp, licença MIT; modelo distribuído por ggerganov/whisper.cpp no Hugging Face, derivado de OpenAI Whisper (MIT).
-- **FFmpeg** — https://ffmpeg.org/legal.html. Instalação do sistema existente; codecs/licença dependem da compilação.
-- React, Zod e demais pacotes mantêm suas licenças nos respectivos pacotes em `node_modules` e versões em `package-lock.json`.
+## Código deste projeto
 
-Os sons click/whoosh/impact são sintetizados localmente pelos comandos do projeto, sem amostras de biblioteca comercial. Arquivos e marcas de clientes continuam sujeitos às suas permissões de uso.
+O código e a documentação originais do Cinema 9D Edição estão sob a [licença MIT](LICENSE), © 2026 Daniel da Costa Gomes Martins / 9D Studio.
+
+A licença MIT do projeto **não substitui** as condições dos componentes abaixo e **não concede direitos** sobre marcas, logotipos ou materiais de clientes:
+
+- Os nomes e símbolos 9D, 9D Studio e Cinema 9D, inclusive `docs/assets/readme/logo-9d.svg` e o símbolo usado nas ilustrações do README, identificam o projeto e não estão licenciados para uso como marca.
+- As artes de fundo em `docs/assets/readme/arte/` foram geradas por IA (Codex) para este projeto e são apenas ilustrativas: não mostram telas reais do método nem pessoas reais.
+- O perfil de exemplo `styles/exemplo/` é neutro e não representa nenhuma marca. Perfis criados por cada pessoa ficam na biblioteca local dela, fora do repositório.
+- Gravações, logos, fontes, telas, vozes e imagens usados em cada produção pertencem a seus titulares e continuam sujeitos às permissões de uso deles.
+
+## Componentes de terceiros
+
+- **Bolo de Camadas**, de Cauhi (pcauhi): https://github.com/pcauhi/bolo-de-camadas, commit `f8907602475045b9e45825a09645da18a700fd29`, licença MIT. A cópia integral da skill e da licença está em `vendor/skills/bolo-de-camadas`. É a referência de direção em cinco camadas; os scripts deste projeto são uma implementação adicional e separada.
+- **Remotion**: https://www.remotion.dev/license. Tem licença própria, que não é MIT. Ela é gratuita em alguns casos, e empresas podem precisar de uma licença paga. Confira a elegibilidade antes do uso comercial. O framework é instalado pelo npm e não é redistribuído como código deste projeto.
+- **Whisper.cpp / ggml**: https://github.com/ggml-org/whisper.cpp, licença MIT. O modelo `ggml-small.bin` é baixado do repositório ggerganov/whisper.cpp no Hugging Face durante o `setup`. Ele deriva do OpenAI Whisper (MIT) e não é redistribuído neste repositório.
+- **FFmpeg**: https://ffmpeg.org/legal.html. Usa-se a instalação do sistema; os codecs e a licença dependem da compilação instalada.
+- **React, Zod e demais pacotes npm**: cada um mantém sua licença no respectivo pacote em `node_modules`. As versões estão fixadas em `package-lock.json`.
+
+Os sons click, whoosh e impact são sintetizados localmente pelo `setup`, com FFmpeg, sem amostras de bibliotecas comerciais.

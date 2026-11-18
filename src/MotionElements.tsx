@@ -1,7 +1,9 @@
 import React from 'react';
-import {Img,interpolate,staticFile,useCurrentFrame,useVideoConfig} from 'remotion';
+import {Easing,Img,interpolate,useCurrentFrame,useVideoConfig} from 'remotion';
 import type {Brand,Scene} from './schema';
 import {useAssets} from './assets';
+import {useStyle} from './style-context';
+import {DimensionalIcon} from './DimensionalIcon';
 
 const clamp={extrapolateLeft:'clamp',extrapolateRight:'clamp'} as const;
 type Element=NonNullable<Scene['elements']>[number];
@@ -13,7 +15,9 @@ function position(e:Element,t:number){
 export const MotionElements:React.FC<{scene:Scene;brand:Brand;layer?:'back'|'front'}>=({scene,brand,layer='front'})=>{
   const t=useCurrentFrame()/useVideoConfig().fps,elements=scene.elements??[];
   const asset=useAssets();
-  const visible=(e:Element)=>interpolate(t,[e.enter,e.enter+.35],[0,1],clamp);
+  const style=useStyle(),motion=style?.tokens.motion,cards=style?.tokens.cards;
+  const exit=motion?interpolate(t,[Math.max(0,scene.end-scene.start-motion.exitSeconds),scene.end-scene.start],[1,0],clamp):1;
+  const visible=(e:Element)=>exit*interpolate(t,[e.enter,e.enter+(motion?.entrySeconds??.35)],[0,1],{...clamp,easing:motion?Easing.bezier(...motion.easing):undefined});
   return <div style={{position:'absolute',inset:0,pointerEvents:'none'}}>
     <svg width={1080} height={1920} style={{position:'absolute',inset:0}}>
       {scene.connections?.map((c,i)=>{
@@ -28,9 +32,10 @@ export const MotionElements:React.FC<{scene:Scene;brand:Brand;layer?:'back'|'fro
       const p=visible(e),pos=position(e,t),screen=e.kind==='screen',label=e.kind==='label';
       return <div key={e.id} style={{position:'absolute',left:pos.x,top:pos.y+(1-p)*24,width:e.width,height:e.height,opacity:p,
         transform:`perspective(1400px) rotateY(${e.rotateY}deg) scale(${.96+.04*p})`,transformOrigin:'center',
-        borderRadius:label?12:screen?30:22,overflow:'hidden',boxSizing:'border-box',
-        padding:screen?8:label?10:20,background:label?'transparent':brand.background,border:label?'none':`1px solid ${brand.muted}66`,
-        boxShadow:label?'none':`${8+e.depth}px 18px 40px #00000028`,display:'flex',flexDirection:'column',gap:12}}>
+        borderRadius:label?12:cards?.radius??(screen?30:22),overflow:'hidden',boxSizing:'border-box',
+        padding:screen?8:label?10:cards?.padding??20,background:label?'transparent':cards?.surface??brand.background,border:label?'none':`1px solid ${cards?.border??brand.muted+'66'}`,
+        boxShadow:label?'none':cards?`7px 12px 0 ${cards.border},0 25px 35px ${cards.shadow}19`:`${8+e.depth}px 18px 40px #00000028`,display:'flex',flexDirection:'column',gap:12}}>
+        {e.kind==='icon'&&<DimensionalIcon kind={e.icon!} color={brand.primary} surface={cards?.surface??brand.background}/>}
         {e.image&&<Img src={asset(e.image)} style={{width:'100%',flex:1,minHeight:0,objectFit:'contain',borderRadius:screen?22:12}}/>}
         {e.title&&<div style={{fontSize:label?38:30,lineHeight:1.12,fontWeight:800,color:brand.foreground,overflowWrap:'anywhere'}}>{e.title}</div>}
         {e.subtitle&&<div style={{fontSize:23,color:brand.muted,lineHeight:1.2}}>{e.subtitle}</div>}

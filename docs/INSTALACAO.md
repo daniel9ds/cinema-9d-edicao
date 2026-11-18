@@ -4,7 +4,7 @@
 
 - Node.js 20 ou superior e npm.
 - FFmpeg/FFprobe e Whisper.cpp (`whisper-cli`) disponíveis no PATH.
-- Git e acesso ao repositório GitHub.
+- Git.
 - Espaço para dependências, navegador, modelo Whisper e cache de render.
 
 No macOS com Homebrew: `brew install node ffmpeg whisper-cpp`.
@@ -22,7 +22,7 @@ npm run instalar:skill
 npm run doctor
 ```
 
-O destino pode ser outro: o executável resolve sua raiz. Ajuste os caminhos dos exemplos para a sua instalação. Repositórios privados exigem sua credencial normal de GitHub; não copie credenciais para o método ou para produções.
+O destino pode ser outro: o executável resolve sua raiz. Ajuste os caminhos dos exemplos para a sua instalação. O repositório é público e não exige credencial para clonar. Não copie tokens ou senhas para o método ou para produções.
 
 `setup` baixa o modelo Whisper small multilíngue (~466 MiB), prepara um navegador compatível do Remotion e gera três sons sintéticos. Esses downloads não são chamadas de geração paga. Configurações específicas da máquina ficam em `.runtime/`, ignorada pelo Git. Não copie `.runtime/machine.json` de outra máquina: execute setup nela.
 
@@ -32,8 +32,13 @@ O método não contém credenciais ou mídia de clientes e não chama APIs pagas
 
 ## Evidências e limitações
 
-`validacao-local.json` e `examples/demonstracao-tecnica.mp4` são evidências históricas da versão 0.1.0, com mídia sintética; não certificam os novos componentes da 0.2.0.
+`validacao-local.json` é evidência histórica da versão 0.1.0, com mídia sintética; não certifica os componentes das versões seguintes. Para ver um resultado, rode `demo` e `previa`.
 
 A atualização 0.2.0 passou por checagem estática TypeScript e conferência de frontmatter. Testes e render de demonstração da atualização não foram executados. A avaliação visual, de sincronização e de áudio deve ocorrer na prévia da produção. Veja [melhorias incorporadas](aprendizados-incorporados.md).
 
 Para uma verificação solicitada do método, estão disponíveis `npm run check`, `npm test` e o comando `demo` seguido de `previa`, usando uma pasta temporária e mídia sintética. Não confunda uma checagem técnica com aprovação criativa.
+
+
+## Perfis de estilo
+
+Perfis, comandos e validação da base estão descritos em [ESTILOS.md](ESTILOS.md). A fonte é fornecida por cada produção; não é redistribuída no pacote. As evidências da versão atual estão em [VALIDACAO-0.4.0.md](VALIDACAO-0.4.0.md).

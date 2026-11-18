@@ -1,4 +1,5 @@
 import {z} from 'zod';
+import {StyleRefSchema,type StyleProfile} from './styles';
 
 const time = z.number().finite().nonnegative();
 const relativeFile = z.string().min(1).refine(s => !s.includes('\\') && !s.startsWith('/') && !s.split('/').includes('..') && !/^[a-z]+:/i.test(s), 'Use caminho relativo dentro da pasta do trabalho.');
@@ -7,6 +8,7 @@ export const JobSchema = z.object({
   version: z.literal(1), name: z.string().min(1), video: relativeFile.default('entrada/video.mp4'),
   theme: z.string().min(1).optional(), revision: z.string().regex(/^[a-z0-9][a-z0-9_-]{0,63}$/).default('r01'),
   rendering: z.object({type:z.literal('custom'),project:relativeFile,composition:z.string().min(1)}).optional(),
+  style:StyleRefSchema.optional(),
   language: z.string().regex(/^[a-z]{2}$/).default('pt'),
   fps: z.union([z.literal(30), z.literal(60)]).default(30),
   width: z.literal(1080).default(1080), height: z.literal(1920).default(1920),
@@ -32,7 +34,8 @@ export const WordSchema = z.object({text: z.string().min(1), start: time, end: t
 export const TranscriptSchema = z.object({version: z.literal(1), language:z.string(), sourceSha256:z.string(), model:z.string(), words:z.array(WordSchema), timing:z.enum(['whisper-word','estimated']).default('whisper-word')});
 const point = z.object({x:z.number().min(-1080).max(2160),y:z.number().min(-1920).max(3840)});
 const element = z.object({
-  id:z.string().min(1),kind:z.enum(['card','screen','label']).default('card'),
+  id:z.string().min(1),kind:z.enum(['card','screen','label','icon']).default('card'),
+  icon:z.enum(['people','link','opportunity','search','profile']).optional(),
   title:z.string().max(95).optional(),subtitle:z.string().max(160).optional(),image:relativeFile.optional(),
   x:point.shape.x,y:point.shape.y,width:z.number().min(20).max(1080),height:z.number().min(20).max(1920),
   depth:z.number().min(-10).max(10).default(0),rotateY:z.number().min(-60).max(60).default(0),
@@ -55,6 +58,8 @@ export const SceneSchema = z.object({
   zoomTo:z.number().min(1).max(2).optional(), presenter:z.enum(['show','hide']).optional(),
   viewport:z.object({x:z.number().min(0).max(1080),y:z.number().min(0).max(1920),width:z.number().positive().max(1080),height:z.number().positive().max(1920),radius:z.number().min(0).max(200).default(0)}).optional(),
   elements:z.array(element).max(20).optional(),
+  branding:z.enum(['show','hide','reveal']).optional(),
+  lettering:z.object({text:z.string().min(1).max(32),top:z.number().min(0).max(1500),size:z.number().min(40).max(200),outline:z.boolean().default(false),drift:z.number().min(0).max(100).default(0)}).optional(),
   connections:z.array(z.object({from:z.string(),to:z.string(),enter:time.default(0)})).max(30).optional(),
 }).superRefine((s,ctx) => {
   if(s.end<=s.start) ctx.addIssue({code:'custom',message:'Cena com duração inválida.'});
@@ -69,6 +74,7 @@ export const SceneSchema = z.object({
     if(e.enter>=s.end-s.start)ctx.addIssue({code:'custom',message:'Entrada de elemento fora da cena.'});
     e.keyframes?.forEach((k,i)=>{if(k.time>s.end-s.start||(i>0&&k.time<=e.keyframes![i-1].time))ctx.addIssue({code:'custom',message:'Keyframes usam segundos locais crescentes dentro da cena.'});});
     if(e.kind==='screen'&&!e.image)ctx.addIssue({code:'custom',message:'Elemento screen precisa de image.'});
+    if(e.kind==='icon'&&!e.icon)ctx.addIssue({code:'custom',message:'Elemento icon precisa de icon.'});
   }
   for(const c of s.connections??[])if(!ids.has(c.from)||!ids.has(c.to)||c.enter>=s.end-s.start)ctx.addIssue({code:'custom',message:'Conexão inválida: confira IDs e tempo local.'});
   if(s.type==='composition'&&!s.elements?.length)ctx.addIssue({code:'custom',message:'Composição precisa de elementos.'});
@@ -87,4 +93,4 @@ export type Brand = z.infer<typeof BrandSchema>;
 export type Cuts = z.infer<typeof CutsSchema>;
 export type Word = z.infer<typeof WordSchema>;
 export type Scene = z.infer<typeof SceneSchema>;
-export type RenderProps = {job:Job; brand:Brand; cuts:Cuts; scenes:Scene[]; words:Word[];assetHashes?:Record<string,string>};
+export type RenderProps = {job:Job; brand:Brand; cuts:Cuts; scenes:Scene[]; words:Word[];assetHashes?:Record<string,string>;style?:StyleProfile};

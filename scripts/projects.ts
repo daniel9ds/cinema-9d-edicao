@@ -16,7 +16,7 @@ export async function revision(dir:string,job:ReturnType<typeof JobSchema.parse>
   const at=new Date().toISOString(),destination=`revisoes/${job.revision}-${at.replaceAll(':','-')}`;
   await fs.mkdir(await inside(dir,'revisoes'),{recursive:true});
   await fs.mkdir(await inside(dir,destination),{recursive:false});
-  const decisions=['job.json','marca/identidade.json','roteiro/briefing.md','roteiro/fala.txt','edicao/cortes.json','edicao/cenas.json','edicao/gestos.json','edicao/aprovacao.json','trabalho/cortes-origem.json','trabalho/transcricao-original.json','trabalho/ultima-previa.json'];
+  const decisions=['job.json','marca/identidade.json','marca/estilo.json','roteiro/briefing.md','roteiro/fala.txt','edicao/cortes.json','edicao/cenas.json','edicao/gestos.json','edicao/aprovacao.json','trabalho/cortes-origem.json','trabalho/transcricao-original.json','trabalho/ultima-previa.json'];
   const hashes:Record<string,string>={};
   for(const file of decisions){
     const input=await inside(dir,file);if(!await exists(input))continue;

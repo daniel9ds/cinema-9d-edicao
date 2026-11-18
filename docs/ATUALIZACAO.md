@@ -23,3 +23,12 @@ O comando `revisao` preserva decisões e transcrição, não toda a mídia/códi
 Na produção, registre observação, proposta e evidência em `aprendizados/`. Na instalação central, peça ao agente para analisar e incorporar melhorias reutilizáveis. Revise e retire dados privados antes de publicar. Não copie mídias de clientes, caches, configurações locais ou credenciais para o Git.
 
 A consolidação precisa de uma alteração concreta em código, componentes ou instruções; não há treinamento ou atualização automática de modelo.
+
+
+## Perfis na 0.3.0
+
+Produções antigas sem `job.style` continuam com os defaults da base. Um estilo é aplicado explicitamente (`iniciar --estilo` ou `estilo --usar`). A cópia de `marca/estilo.json`, seu hash e sua versão passam a fazer parte da edição; uma mudança exige nova aplicação, revisão e prévia. Não modifique versões de catálogo já utilizadas: publique uma versão nova quando houver alteração aprovada. A base 0.3.0 exige SHA-256 do próprio MP4 no registro da prévia antes de aprovar; prévias antigas precisam ser regeneradas para esse fluxo. Montagens próprias continuam usando seus scripts.
+
+## 0.4.0 — orquestração e estilos próprios
+
+Acrescenta biblioteca local de estilos/kits, lotes com N versões, contratos de direção/revisão do agente, galeria e gates de aprovação/exportação. Preserve as produções e `.runtime`. A atualização do método invalida fingerprints ativos de prévias da base central: gere outra prévia/novo lote, sem reaproveitar aprovações. Montagens próprias continuam com seus scripts. Bibliotecas privadas ficam fora do Git. Leia `ORQUESTRACAO.md`, `CRIAR-ESTILO.md` e `VALIDACAO-0.4.0.md`.

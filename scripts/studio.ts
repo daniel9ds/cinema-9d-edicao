@@ -5,7 +5,7 @@ import {ROOT,inside,readJson,writeJson} from './core.ts';
 import {JobSchema,ScenesSchema,BrandSchema} from '../src/schema.ts';
 
 // O Studio tem uma trava própria. A trava de edição só dura a sincronização.
-export async function openStudio(dir:string,port:string,acquire:(action:()=>Promise<void>)=>Promise<void>,stage:()=>Promise<{fingerprint:string;publicDir:string}>){
+export async function openStudio(dir:string,port:string,acquire:(action:()=>Promise<void>)=>Promise<void>,stage:()=>Promise<{fingerprint:string;publicDir:string}>,noOpen=false){
   if(!/^\d{4,5}$/.test(port)||Number(port)>65535)throw Error('Porta inválida.');
   const lockFile=await inside(dir,'.cinema-studio.lock');
   const lock=await fs.open(lockFile,'wx').catch(()=>{throw Error('Já existe um Studio deste trabalho. Confira .cinema-studio.lock e seu PID antes de remover uma trava abandonada.');});
@@ -15,7 +15,7 @@ export async function openStudio(dir:string,port:string,acquire:(action:()=>Prom
     const job=JobSchema.parse(await readJson(await inside(dir,'job.json')));
     const scenes=ScenesSchema.parse(await readJson(await inside(dir,'edicao/cenas.json')));
     const brand=BrandSchema.parse(await readJson(await inside(dir,'marca/identidade.json')));
-    const files=['job.json','edicao/cenas.json','edicao/cortes.json','edicao/gestos.json','marca/identidade.json','trabalho/transcricao-original.json',job.video,job.music,brand.logo,brand.fontFile,...scenes.scenes.flatMap(s=>[s.image,s.sound,...(s.elements??[]).map(e=>e.image)])].filter((s):s is string=>!!s);
+    const files=['job.json','edicao/cenas.json','edicao/cortes.json','edicao/gestos.json','marca/identidade.json','marca/estilo.json','trabalho/transcricao-original.json',job.video,job.music,brand.logo,brand.fontFile,...scenes.scenes.flatMap(s=>[s.image,s.sound,...(s.elements??[]).map(e=>e.image)])].filter((s):s is string=>!!s);
     const stats=[];for(const file of new Set(files)){const s=await fs.stat(await inside(dir,file)).catch(()=>null);stats.push([file,s?.mtimeMs,s?.size]);}
     return JSON.stringify(stats);
   }
@@ -44,7 +44,7 @@ export async function openStudio(dir:string,port:string,acquire:(action:()=>Prom
     timer=setInterval(()=>{if(!stopped&&!pending)pending=sync().finally(()=>{pending=undefined;});},1500);
     console.log(`Studio: http://localhost:${port}/Cinema9DEdicao — sincronização de dados a cada 1,5s. Confira trabalho/studio-estado.json.`);
     await new Promise<void>((resolve,reject)=>{
-      const child=spawn(process.execPath,[path.join(ROOT,'node_modules/@remotion/cli/remotion-cli.js'),'studio',path.join(ROOT,'src/index.ts'),'--public-dir',state.publicDir,'--props',path.join(dir,'trabalho/render-props.json'),'--port',port],{cwd:ROOT,stdio:'inherit'});
+      const child=spawn(process.execPath,[path.join(ROOT,'node_modules/@remotion/cli/remotion-cli.js'),'studio',path.join(ROOT,'src/index.ts'),'--public-dir',state.publicDir,'--props',path.join(dir,'trabalho/render-props.json'),'--port',port,...(noOpen?['--no-open']:[])],{cwd:ROOT,stdio:'inherit'});
       const stop=()=>{stopped=true;child.kill('SIGTERM');};
       const cleanup=()=>{process.off('SIGINT',stop);process.off('SIGTERM',stop);};
       process.on('SIGINT',stop);process.on('SIGTERM',stop);
@@ -52,5 +52,6 @@ export async function openStudio(dir:string,port:string,acquire:(action:()=>Prom
     });
   }finally{
     stopped=true;if(timer)clearInterval(timer);await pending;await lock.close();await fs.rm(lockFile,{force:true});
+    await writeJson(stateFile,{status:'encerrado',at:new Date().toISOString(),port},false);
   }
 }
